@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
+import { motion } from "framer-motion"
 import { personalInfo } from "@/lib/data"
-import { Button } from "@/components/ui/button"
-import { ArrowRightIcon, TerminalIcon } from "@/icons"
+import { ArrowRightIcon } from "@/icons"
+import { MagneticButton } from "@/components/composite/magnetic-button"
+
+const ease = [0.16, 1, 0.3, 1]
 
 function TypewriterRole({ roles }: { roles: string[] }) {
   const [index, setIndex] = useState(0)
@@ -13,160 +16,136 @@ function TypewriterRole({ roles }: { roles: string[] }) {
   const [paused, setPaused] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     if (!mounted) return
-
     const current = roles[index] ?? ""
-
     if (paused) {
-      const t = setTimeout(() => {
-        setPaused(false)
-        setDeleting(true)
-      }, 2000)
-      return () => clearTimeout(t)
+      const id = setTimeout(() => { setPaused(false); setDeleting(true) }, 2400)
+      return () => clearTimeout(id)
     }
-
     if (deleting && text === "") {
       setDeleting(false)
       setIndex((i) => (i + 1) % roles.length)
       return
     }
-
-    if (!deleting && text === current) {
-      setPaused(true)
-      return
-    }
-
-    const speed = deleting ? 40 : 90
-    const t = setTimeout(() => {
-      setText(
-        deleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1)
-      )
-    }, speed)
-
-    return () => clearTimeout(t)
+    if (!deleting && text === current) { setPaused(true); return }
+    const id = setTimeout(() => {
+      setText(deleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1))
+    }, deleting ? 36 : 82)
+    return () => clearTimeout(id)
   }, [text, deleting, paused, index, roles, mounted])
 
-  if (!mounted) return <span className="text-primary">{roles[0]}</span>
-
   return (
-    <span className="text-primary">
-      {text}
-      <span className="animate-[cursor-blink_1s_step-end_infinite] text-primary/80">
-        |
-      </span>
+    <span className="gradient-text-soft font-semibold">
+      {mounted ? text : roles[0]}
+      <span
+        className="ml-0.5 inline-block w-0.5 h-6 align-middle rounded-full animate-cursor-blink"
+        style={{ background: "hsl(238, 77%, 62%)" }}
+      />
     </span>
   )
 }
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } },
+}
+const item = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
+}
+
 export function HeroSection() {
   const t = useTranslations("hero")
-  const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-  }
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center hero-grid overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Radial glow behind content */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32 text-center md:text-left">
-        {/* Terminal tag */}
-        <div
-          className={`inline-flex items-center gap-2 font-mono text-xs text-primary/70 bg-primary/5 border border-primary/20 rounded-full px-4 py-1.5 mb-8 transition-all duration-700 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
-          }`}
-        >
-          <TerminalIcon className="w-3 h-3" />
-          <span>Available for new opportunities</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        </div>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 max-w-6xl mx-auto px-6 py-36 text-center"
+      >
+        {/* Available badge */}
+        <motion.div variants={item} className="flex justify-center mb-10">
+          <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-mono font-medium glass border-white/40 text-foreground/70 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.7)]" />
+            Available for new opportunities
+          </span>
+        </motion.div>
 
         {/* Greeting */}
-        <p
-          className={`font-mono text-sm text-muted-foreground mb-3 transition-all duration-700 delay-100 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
+        <motion.p variants={item} className="font-mono text-sm text-foreground/45 mb-4 tracking-wider">
           {t("greeting")}
-        </p>
+        </motion.p>
 
-        {/* Name */}
-        <h1
-          className={`text-5xl md:text-7xl font-bold tracking-tight mb-4 transition-all duration-700 delay-200 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+        {/* Name — large gradient display */}
+        <motion.h1
+          variants={item}
+          className="text-7xl md:text-9xl font-extrabold tracking-tight mb-6 leading-none"
         >
           <span className="gradient-text">{personalInfo.name}</span>
-        </h1>
+        </motion.h1>
 
         {/* Typewriter role */}
-        <div
-          className={`text-xl md:text-2xl font-mono mb-6 h-8 transition-all duration-700 delay-300 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
+        <motion.div variants={item} className="text-xl md:text-2xl font-mono mb-8 h-10">
           <TypewriterRole roles={personalInfo.roles} />
-        </div>
+        </motion.div>
 
         {/* Tagline */}
-        <p
-          className={`text-muted-foreground text-base md:text-lg max-w-xl md:max-w-2xl leading-relaxed mb-10 transition-all duration-700 delay-[400ms] ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+        <motion.p
+          variants={item}
+          className="text-foreground/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-14"
         >
           {t("intro")}
-        </p>
+        </motion.p>
 
-        {/* CTAs */}
-        <div
-          className={`flex flex-col sm:flex-row gap-4 justify-center md:justify-start transition-all duration-700 delay-500 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <Button
-            size="lg"
-            variant="glow"
+        {/* CTAs — with magnetic pull */}
+        <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <MagneticButton
             onClick={() => scrollTo("projects")}
-            className="group"
+            className="group inline-flex items-center justify-center h-12 px-9 rounded-2xl text-sm font-semibold cursor-pointer gradient-btn text-white"
           >
             View My Work
             <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
+          </MagneticButton>
+          <MagneticButton
             onClick={() => scrollTo("contact")}
+            className="inline-flex items-center justify-center h-12 px-9 rounded-2xl text-sm font-semibold cursor-pointer gradient-btn-outline"
           >
             Get in Touch
-          </Button>
-        </div>
+          </MagneticButton>
+        </motion.div>
 
         {/* Scroll hint */}
-        <div
-          className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 delay-700 ${
-            mounted ? "opacity-100" : "opacity-0"
-          }`}
+        <motion.div
+          variants={item}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-xs font-mono text-muted-foreground/50">scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-muted-foreground/30 to-transparent" />
-        </div>
-      </div>
+          <span className="text-[10px] font-mono text-foreground/30 tracking-[0.22em] uppercase">scroll</span>
+          <div className="w-px h-10 bg-gradient-to-b from-foreground/20 to-transparent" />
+        </motion.div>
+      </motion.div>
+
+      {/* Decorative floating orbs */}
+      <div
+        className="absolute top-32 right-[8%] w-64 h-64 rounded-full pointer-events-none opacity-30 animate-float"
+        style={{ background: "radial-gradient(circle, hsl(238,77%,72%) 0%, transparent 70%)", animationDelay: "0s" }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-32 left-[6%] w-48 h-48 rounded-full pointer-events-none opacity-25 animate-float"
+        style={{ background: "radial-gradient(circle, hsl(292,84%,72%) 0%, transparent 70%)", animationDelay: "1.5s" }}
+        aria-hidden="true"
+      />
     </section>
   )
 }

@@ -1,18 +1,20 @@
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
+import { Plus_Jakarta_Sans, Fira_Code } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { Providers } from "./providers"
 import messages from "../../messages/en.json"
 import "@/styles/globals.css"
 
-const inter = Inter({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
 })
 
-const jetbrainsMono = JetBrains_Mono({
+const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "500"],
 })
 
 export const metadata: Metadata = {
@@ -36,7 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${firaCode.variable}`}
     >
       <body>
         <Providers>

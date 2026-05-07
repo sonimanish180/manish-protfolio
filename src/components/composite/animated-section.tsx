@@ -1,6 +1,7 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
 import { cn } from "@/lib/utils"
 
 interface AnimatedSectionProps {
@@ -9,44 +10,24 @@ interface AnimatedSectionProps {
   delay?: number
 }
 
-export function AnimatedSection({
-  children,
-  className,
-  delay = 0,
-}: AnimatedSectionProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay)
-          observer.unobserve(el)
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [delay])
+// Kinetic — RevealSection pattern using Framer Motion useInView
+export function AnimatedSection({ children, className, delay = 0 }: AnimatedSectionProps) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-80px" })
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={cn(
-        "transition-all duration-700 ease-out",
-        isVisible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-6",
-        className
-      )}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.6,
+        delay: delay / 1000, // convert ms to seconds
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={cn(className)}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }

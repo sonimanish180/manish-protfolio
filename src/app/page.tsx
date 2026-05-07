@@ -8,14 +8,19 @@ import { ContactSection } from "./[locale]/_components/contact-section"
 
 export default function HomePage() {
   return (
-    <main>
-      <Nav />
-      <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <ContactSection />
-    </main>
+    <>
+      {/* Fixed Aurora mesh gradient — sits behind everything */}
+      <div className="mesh-bg-fixed" aria-hidden="true" />
+
+      <main>
+        <Nav />
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
+    </>
   )
 }
