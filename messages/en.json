@@ -1,0 +1,41 @@
+{
+  "common": {
+    "viewWork": "View My Work",
+    "getInTouch": "Get in Touch",
+    "copyEmail": "Copy Email",
+    "copied": "Copied!",
+    "openLinkedIn": "Open LinkedIn",
+    "downloadResume": "Download Resume"
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "intro": "Product-focused Lead Software Engineer specializing in 0→1 products and scalable platform architecture. I build end-to-end systems across frontend, backend, and mobile."
+  },
+  "about": {
+    "title": "About Me",
+    "bio": "I'm a Lead Software Engineer with 5+ years building production systems from the ground up. I specialize in the full journey — from whiteboard to deployed, from solo prototype to team-scaled platform. Whether it's a payment gateway, a blockchain data platform, or a no-code builder, I own the architecture end-to-end.",
+    "education": "Education"
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present"
+  },
+  "skills": {
+    "title": "Skills & Expertise"
+  },
+  "projects": {
+    "title": "Featured Work"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Open to interesting problems and the right team. Let's talk.",
+    "emailLabel": "Email"
+  }
+}
