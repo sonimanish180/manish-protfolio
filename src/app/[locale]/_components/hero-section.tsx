@@ -42,7 +42,7 @@ function TypewriterRole({ roles }: { roles: string[] }) {
       {mounted ? text : roles[0]}
       <span
         className="ml-0.5 inline-block w-0.5 h-6 align-middle rounded-full animate-cursor-blink"
-        style={{ background: "hsl(238, 77%, 62%)" }}
+        style={{ background: "hsl(174, 100%, 50%)" }}
       />
     </span>
   )
@@ -50,11 +50,11 @@ function TypewriterRole({ roles }: { roles: string[] }) {
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
 }
 const item = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
+  hidden: { opacity: 0, y: 32, filter: "blur(8px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease } },
 }
 
 export function HeroSection() {
@@ -76,18 +76,26 @@ export function HeroSection() {
       >
         {/* Available badge */}
         <motion.div variants={item} className="flex justify-center mb-10">
-          <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-mono font-medium glass border-white/40 text-foreground/70 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.7)]" />
+          <span
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-mono font-medium"
+            style={{
+              background: "rgba(0, 255, 218, 0.07)",
+              border: "1px solid rgba(0, 255, 218, 0.2)",
+              color: "hsl(174, 100%, 72%)",
+            }}
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             Available for new opportunities
           </span>
         </motion.div>
 
         {/* Greeting */}
-        <motion.p variants={item} className="font-mono text-sm text-foreground/45 mb-4 tracking-wider">
+        <motion.p variants={item} className="font-mono text-sm mb-4 tracking-wider"
+          style={{ color: "hsl(var(--accent))" }}>
           {t("greeting")}
         </motion.p>
 
-        {/* Name — large gradient display */}
+        {/* Name */}
         <motion.h1
           variants={item}
           className="text-7xl md:text-9xl font-extrabold tracking-tight mb-6 leading-none"
@@ -103,16 +111,17 @@ export function HeroSection() {
         {/* Tagline */}
         <motion.p
           variants={item}
-          className="text-foreground/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-14"
+          className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-14"
+          style={{ color: "hsl(var(--text-body))" }}
         >
           {t("intro")}
         </motion.p>
 
-        {/* CTAs — with magnetic pull */}
+        {/* CTAs */}
         <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <MagneticButton
             onClick={() => scrollTo("projects")}
-            className="group inline-flex items-center justify-center h-12 px-9 rounded-2xl text-sm font-semibold cursor-pointer gradient-btn text-white"
+            className="group inline-flex items-center justify-center h-12 px-9 rounded-2xl text-sm font-semibold cursor-pointer gradient-btn"
           >
             View My Work
             <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -130,20 +139,35 @@ export function HeroSection() {
           variants={item}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-[10px] font-mono text-foreground/30 tracking-[0.22em] uppercase">scroll</span>
-          <div className="w-px h-10 bg-gradient-to-b from-foreground/20 to-transparent" />
+          <span className="text-[10px] font-mono tracking-[0.22em] uppercase"
+            style={{ color: "hsl(var(--text-dim))" }}>scroll</span>
+          <div
+            className="w-px h-10"
+            style={{ background: "linear-gradient(to bottom, var(--primary-glow-strong), transparent)" }}
+          />
         </motion.div>
       </motion.div>
 
       {/* Decorative floating orbs */}
       <div
-        className="absolute top-32 right-[8%] w-64 h-64 rounded-full pointer-events-none opacity-30 animate-float"
-        style={{ background: "radial-gradient(circle, hsl(238,77%,72%) 0%, transparent 70%)", animationDelay: "0s" }}
+        className="absolute top-28 right-[8%] w-72 h-72 rounded-full pointer-events-none opacity-20 animate-float-slow"
+        style={{ background: "radial-gradient(circle, hsl(174,100%,50%) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-32 left-[6%] w-48 h-48 rounded-full pointer-events-none opacity-25 animate-float"
-        style={{ background: "radial-gradient(circle, hsl(292,84%,72%) 0%, transparent 70%)", animationDelay: "1.5s" }}
+        className="absolute bottom-28 left-[6%] w-52 h-52 rounded-full pointer-events-none opacity-15 animate-float-slow"
+        style={{
+          background: "radial-gradient(circle, hsl(38,92%,58%) 0%, transparent 70%)",
+          animationDelay: "2s",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-1/2 left-[2%] w-32 h-32 rounded-full pointer-events-none opacity-10 animate-float"
+        style={{
+          background: "radial-gradient(circle, hsl(194,100%,50%) 0%, transparent 70%)",
+          animationDelay: "1s",
+        }}
         aria-hidden="true"
       />
     </section>

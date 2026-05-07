@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { useScrollSpy } from "@/hooks"
 import { useUIStore } from "@/stores"
-import { MenuIcon, CloseIcon } from "@/icons"
+import { MenuIcon, CloseIcon, LayersIcon } from "@/icons"
 import { motion, AnimatePresence } from "framer-motion"
 
 const NAV_SECTIONS = ["about", "experience", "skills", "projects", "contact"]
@@ -35,7 +36,7 @@ export function Nav() {
           initial={{ y: -16, opacity: 0 }}
           animate={mounted ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="glass-nav rounded-2xl px-5 h-14 flex items-center justify-between"
+          className="veil-nav rounded-2xl px-5 h-14 flex items-center justify-between"
         >
           {/* Logo */}
           <button
@@ -61,9 +62,9 @@ export function Nav() {
               >
                 {activeId === id && (
                   <motion.span
-                    layoutId="aurora-nav-pill"
+                    layoutId="veil-nav-pill"
                     className="absolute inset-0 rounded-xl"
-                    style={{ background: "rgba(109, 91, 255, 0.1)", border: "1px solid rgba(109, 91, 255, 0.2)" }}
+                    style={{ background: "rgba(0, 255, 218, 0.08)", border: "1px solid rgba(0, 255, 218, 0.2)" }}
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -72,6 +73,16 @@ export function Nav() {
                 </span>
               </button>
             ))}
+            <Link
+              href="/design"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-sm rounded-xl transition-colors duration-200 cursor-pointer"
+              style={{ color: "hsl(var(--text-muted))" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(var(--text-heading))")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(var(--text-muted))")}
+            >
+              <LayersIcon className="w-3.5 h-3.5" />
+              Design
+            </Link>
             <motion.button
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.96 }}
@@ -112,7 +123,7 @@ export function Nav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.97 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="fixed top-20 left-4 right-4 z-40 md:hidden glass-nav rounded-2xl p-5"
+              className="fixed top-20 left-4 right-4 z-40 md:hidden veil-nav rounded-2xl p-5"
             >
               <nav className="flex flex-col gap-1">
                 {NAV_SECTIONS.map((id) => (

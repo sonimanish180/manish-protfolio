@@ -5,12 +5,25 @@ import { ExperienceSection } from "./[locale]/_components/experience-section"
 import { SkillsSection } from "./[locale]/_components/skills-section"
 import { ProjectsSection } from "./[locale]/_components/projects-section"
 import { ContactSection } from "./[locale]/_components/contact-section"
+import { ScrollProgress } from "@/components/composite/scroll-progress"
+import { CursorGlow } from "@/components/composite/cursor-glow"
+import { StyleSwitcher } from "@/components/composite/style-switcher"
+import { StyleApplier } from "@/components/composite/style-applier"
 
 export default function HomePage() {
   return (
     <>
-      {/* Fixed Aurora mesh gradient — sits behind everything */}
-      <div className="mesh-bg-fixed" aria-hidden="true" />
+      {/* Background — re-skinned by themes.css via data-style */}
+      <div className="veil-bg-fixed" aria-hidden="true" />
+
+      {/* Scroll Theater: gradient progress bar */}
+      <ScrollProgress />
+
+      {/* Cursor-tracking glow orb */}
+      <CursorGlow />
+
+      {/* Applies data-style="X" to <html> when style changes */}
+      <StyleApplier />
 
       <main>
         <Nav />
@@ -21,6 +34,9 @@ export default function HomePage() {
         <ProjectsSection />
         <ContactSection />
       </main>
+
+      {/* Fixed bottom style switcher */}
+      <StyleSwitcher />
     </>
   )
 }

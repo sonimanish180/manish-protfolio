@@ -9,8 +9,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Aurora is light-first */}
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      {/* Veil is dark-only */}
+      <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
         {children}
       </ThemeProvider>
     </QueryClientProvider>
