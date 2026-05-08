@@ -1847,3 +1847,448 @@ html[data-style="synthwave"] .ui-timeline-line { background: rgba(255,26,179,.22
 html[data-style="synthwave"] .ui-accordion-item { border-color: rgba(255,26,179,.16); }
 html[data-style="synthwave"] .ui-accordion-item.open { border-color: rgba(0,229,255,.35); }
 html[data-style="synthwave"] .ui-code-block { background: hsl(258,40%,8%); }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PHASE 2 — SHAPE · PATTERN · TYPOGRAPHY · ATMOSPHERE OVERRIDES
+   Each system gets a distinct visual language, not just a colour swap.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   GLOBAL RADIUS SYSTEM — CSS-var driven, inherited by all elements
+   ──────────────────────────────────────────────────────────────────── */
+html[data-style="aurora"]       { --radius: 1.375rem; }
+html[data-style="clay"]         { --radius: 1.25rem;  }
+html[data-style="carbon"]       { --radius: 0.5rem;   }
+html[data-style="obsidian"]     { --radius: 0.25rem;  }
+html[data-style="neobrutalism"] { --radius: 0px;      }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   AURORA — True glassmorphism: frosted panels, rounded, airy
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Larger rounded corners on Tailwind classes */
+html[data-style="aurora"] [class~="rounded-2xl"] { border-radius: 22px !important; }
+html[data-style="aurora"] [class~="rounded-xl"]  { border-radius: 16px !important; }
+html[data-style="aurora"] [class~="rounded-lg"]  { border-radius: 12px !important; }
+html[data-style="aurora"] [class~="rounded-3xl"] { border-radius: 28px !important; }
+
+/* Frosted glass overlay on section cards via pseudo-element */
+html[data-style="aurora"] #about    .rounded-2xl,
+html[data-style="aurora"] #skills   .rounded-2xl,
+html[data-style="aurora"] #projects .rounded-2xl,
+html[data-style="aurora"] #experience .rounded-2xl,
+html[data-style="aurora"] #contact  .rounded-2xl {
+  backdrop-filter: blur(14px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(170%) !important;
+  box-shadow: 0 8px 40px rgba(109,91,255,0.12), inset 0 1px 0 rgba(255,255,255,0.65) !important;
+}
+
+/* Section headings: gradient purple text on light bg */
+html[data-style="aurora"] h1 { letter-spacing: -0.025em; }
+html[data-style="aurora"] .section-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+}
+
+/* Nav: heavy glass */
+html[data-style="aurora"] .veil-nav {
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  background: rgba(255,255,255,0.72) !important;
+  box-shadow: 0 4px 32px rgba(109,91,255,0.10), 0 1px 0 rgba(255,255,255,0.9) inset !important;
+}
+
+/* Section dividers with aurora accent */
+html[data-style="aurora"] #hero   { background: transparent; }
+html[data-style="aurora"] section { border-bottom: 1px solid rgba(109,91,255,0.06); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CARBON — Terminal / tech grid, sharp edges, cyan on charcoal
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Subtle cyan grid overlay */
+html[data-style="carbon"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,210,230,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,210,230,0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+
+/* Tighter radius = more technical feel */
+html[data-style="carbon"] [class~="rounded-2xl"] { border-radius: 8px  !important; }
+html[data-style="carbon"] [class~="rounded-xl"]  { border-radius: 6px  !important; }
+html[data-style="carbon"] [class~="rounded-3xl"] { border-radius: 10px !important; }
+html[data-style="carbon"] [class~="rounded-full"] { border-radius: 4px  !important; }
+
+/* Monospace headings feel */
+html[data-style="carbon"] h1 { letter-spacing: -0.02em; font-feature-settings: "ss01" 1; }
+html[data-style="carbon"] .section-label { letter-spacing: 0.28em; font-size: 10px; }
+
+/* Card left accent line via outline-offset trick */
+html[data-style="carbon"] #experience .rounded-2xl,
+html[data-style="carbon"] #projects   .rounded-2xl {
+  box-shadow: inset 3px 0 0 rgba(0,210,230,0.5), 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CLAY — Warm editorial, generous curves, terracotta warmth
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Warm organic radius */
+html[data-style="clay"] [class~="rounded-2xl"] { border-radius: 22px !important; }
+html[data-style="clay"] [class~="rounded-xl"]  { border-radius: 16px !important; }
+html[data-style="clay"] [class~="rounded-3xl"] { border-radius: 28px !important; }
+
+/* Warm grain texture via noise overlay */
+html[data-style="clay"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Warm soft shadows on cards */
+html[data-style="clay"] #about     .rounded-2xl,
+html[data-style="clay"] #projects  .rounded-2xl,
+html[data-style="clay"] #experience .rounded-2xl {
+  box-shadow: 0 6px 28px rgba(180,80,20,0.10), 0 2px 8px rgba(180,80,20,0.06) !important;
+}
+
+/* Serif-inspired heading weight */
+html[data-style="clay"] h1 { letter-spacing: -0.02em; font-weight: 900; }
+html[data-style="clay"] .section-label { border-radius: 20px; letter-spacing: 0.18em; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PULSE — High energy, coral on white, bold statements
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Energetic diagonal stripe hint on background */
+html[data-style="pulse"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent 0px,
+    transparent 40px,
+    rgba(229,62,30,0.018) 40px,
+    rgba(229,62,30,0.018) 41px
+  );
+  pointer-events: none;
+}
+
+/* Bold card left-stroke */
+html[data-style="pulse"] #experience .rounded-2xl,
+html[data-style="pulse"] #projects   .rounded-2xl {
+  box-shadow: inset 4px 0 0 hsl(4,90%,58%), 0 4px 20px rgba(229,62,30,0.08) !important;
+}
+
+/* Bold heading treatment */
+html[data-style="pulse"] h1 {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+html[data-style="pulse"] h2, html[data-style="pulse"] h3 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   OBSIDIAN — Void aesthetic: pure black, thin lime lines, ultra-sparse
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Sub-pixel grid — barely visible */
+html[data-style="obsidian"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(130,230,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(130,230,0,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+/* Ultra-minimal — strip all soft shadows */
+html[data-style="obsidian"] #about      .rounded-2xl,
+html[data-style="obsidian"] #skills     .rounded-2xl,
+html[data-style="obsidian"] #projects   .rounded-2xl,
+html[data-style="obsidian"] #experience .rounded-2xl,
+html[data-style="obsidian"] #contact    .rounded-2xl {
+  box-shadow: none !important;
+}
+
+/* Mono spacing on section labels */
+html[data-style="obsidian"] h1 {
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+html[data-style="obsidian"] .section-label {
+  letter-spacing: 0.30em;
+  font-size: 10px;
+  background: transparent;
+  border-color: rgba(130,230,0,0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NEOBRUTALISM — Zero radius everywhere, thick offset borders, raw energy
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Kill ALL rounded corners, including full pills */
+html[data-style="neobrutalism"] [class~="rounded-full"],
+html[data-style="neobrutalism"] [class~="rounded-3xl"],
+html[data-style="neobrutalism"] [class~="rounded-2xl"],
+html[data-style="neobrutalism"] [class~="rounded-xl"],
+html[data-style="neobrutalism"] [class~="rounded-lg"],
+html[data-style="neobrutalism"] [class~="rounded-md"],
+html[data-style="neobrutalism"] [class~="rounded-sm"],
+html[data-style="neobrutalism"] [class~="rounded"] { border-radius: 0 !important; }
+
+/* Diagonal stripe on background — classic brutalist pattern */
+html[data-style="neobrutalism"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 16px,
+    rgba(0,0,0,0.028) 16px,
+    rgba(0,0,0,0.028) 17px
+  );
+  pointer-events: none;
+}
+
+/* ALL section cards: thick black outline + offset shadow */
+html[data-style="neobrutalism"] #hero       .rounded-2xl,
+html[data-style="neobrutalism"] #about      .rounded-2xl,
+html[data-style="neobrutalism"] #skills     .rounded-2xl,
+html[data-style="neobrutalism"] #projects   .rounded-2xl,
+html[data-style="neobrutalism"] #experience .rounded-2xl,
+html[data-style="neobrutalism"] #contact    .rounded-2xl,
+html[data-style="neobrutalism"] .veil-card {
+  outline: 2.5px solid #111 !important;
+  box-shadow: 5px 5px 0 #111 !important;
+  transition: box-shadow 0.07s ease, transform 0.07s ease, outline-color 0.07s ease !important;
+}
+
+html[data-style="neobrutalism"] #experience .rounded-2xl:hover,
+html[data-style="neobrutalism"] #projects   .rounded-2xl:hover,
+html[data-style="neobrutalism"] #contact    .rounded-2xl:hover,
+html[data-style="neobrutalism"] .veil-card:hover {
+  box-shadow: 8px 8px 0 #111 !important;
+  transform: translate(-3px, -3px) !important;
+}
+
+/* Headings: massive weight + yellow underline decoration */
+html[data-style="neobrutalism"] h1 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+html[data-style="neobrutalism"] h2 {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+/* section labels: rectangular yellow boxes */
+html[data-style="neobrutalism"] .section-label {
+  border-radius: 0 !important;
+  outline: 2px solid #111;
+  box-shadow: 2px 2px 0 #111;
+}
+
+/* Inputs: thick borders */
+html[data-style="neobrutalism"] .ui-input,
+html[data-style="neobrutalism"] .ui-textarea {
+  border: 2.5px solid #111 !important;
+  border-radius: 0 !important;
+  box-shadow: 3px 3px 0 #111 !important;
+}
+html[data-style="neobrutalism"] .ui-input:focus,
+html[data-style="neobrutalism"] .ui-textarea:focus {
+  box-shadow: 5px 5px 0 #111 !important;
+  transform: translate(-2px, -2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NEON NOIR — Cyberpunk pink grid, glow headings, scan-line cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Hot pink grid overlay — the signature neon-noir look */
+html[data-style="neon-noir"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,26,179,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,26,179,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+/* Heading neon glow */
+html[data-style="neon-noir"] h1 {
+  text-shadow: 0 0 28px rgba(255,26,179,0.55), 0 0 70px rgba(255,26,179,0.18);
+  letter-spacing: -0.02em;
+}
+html[data-style="neon-noir"] h2,
+html[data-style="neon-noir"] h3 {
+  text-shadow: 0 0 18px rgba(255,26,179,0.35), 0 0 40px rgba(255,26,179,0.12);
+}
+
+/* Cards: pink neon border glow */
+html[data-style="neon-noir"] #about      .rounded-2xl,
+html[data-style="neon-noir"] #skills     .rounded-2xl,
+html[data-style="neon-noir"] #projects   .rounded-2xl,
+html[data-style="neon-noir"] #experience .rounded-2xl,
+html[data-style="neon-noir"] #contact    .rounded-2xl {
+  box-shadow:
+    0 0 0 1px rgba(255,26,179,0.22),
+    0 0 24px rgba(255,26,179,0.08),
+    0 8px 40px rgba(0,0,0,0.45) !important;
+}
+
+html[data-style="neon-noir"] #projects .rounded-2xl:hover,
+html[data-style="neon-noir"] #experience .rounded-2xl:hover {
+  box-shadow:
+    0 0 0 1px rgba(255,26,179,0.55),
+    0 0 40px rgba(255,26,179,0.18),
+    0 8px 40px rgba(0,0,0,0.5) !important;
+}
+
+/* Section labels: neon pink border */
+html[data-style="neon-noir"] .section-label {
+  border-color: rgba(255,26,179,0.45) !important;
+  box-shadow: 0 0 12px rgba(255,26,179,0.2) !important;
+}
+
+/* Nav: neon border */
+html[data-style="neon-noir"] .veil-nav {
+  border-color: rgba(255,26,179,0.18) !important;
+  box-shadow: 0 4px 32px rgba(255,26,179,0.06), 0 0 0 1px rgba(255,26,179,0.08) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SYNTHWAVE — CRT scan lines, retro glow, pink-to-cyan everything
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* CRT horizontal scan lines — strong synthwave signature */
+html[data-style="synthwave"] .veil-bg-fixed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.18) 0px,
+    rgba(0,0,0,0.18) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Headings: warm pink glow */
+html[data-style="synthwave"] h1 {
+  text-shadow:
+    0 0 36px rgba(255,26,179,0.6),
+    0 0 80px rgba(255,26,179,0.22),
+    0 0 120px rgba(0,229,255,0.12);
+  letter-spacing: -0.02em;
+}
+html[data-style="synthwave"] h2,
+html[data-style="synthwave"] h3 {
+  text-shadow: 0 0 20px rgba(255,26,179,0.4), 0 0 50px rgba(255,26,179,0.12);
+}
+
+/* Cards: retrowave gradient border glow */
+html[data-style="synthwave"] #about      .rounded-2xl,
+html[data-style="synthwave"] #skills     .rounded-2xl,
+html[data-style="synthwave"] #projects   .rounded-2xl,
+html[data-style="synthwave"] #experience .rounded-2xl,
+html[data-style="synthwave"] #contact    .rounded-2xl {
+  box-shadow:
+    0 0 0 1px rgba(255,26,179,0.28),
+    0 0 30px rgba(255,26,179,0.10),
+    0 0 60px rgba(0,229,255,0.05),
+    0 12px 48px rgba(0,0,0,0.55) !important;
+}
+
+html[data-style="synthwave"] #projects   .rounded-2xl:hover,
+html[data-style="synthwave"] #experience .rounded-2xl:hover {
+  box-shadow:
+    0 0 0 1px rgba(0,229,255,0.45),
+    0 0 32px rgba(255,26,179,0.18),
+    0 0 64px rgba(0,229,255,0.10),
+    0 12px 48px rgba(0,0,0,0.6) !important;
+}
+
+/* Section label: retrowave gradient border */
+html[data-style="synthwave"] .section-label {
+  border-color: rgba(255,26,179,0.4) !important;
+  box-shadow: 0 0 16px rgba(255,26,179,0.18), 0 0 30px rgba(0,229,255,0.08) !important;
+}
+
+/* Nav: deep purple glass */
+html[data-style="synthwave"] .veil-nav {
+  background: rgba(20,12,46,0.88) !important;
+  border-color: rgba(255,26,179,0.2) !important;
+  box-shadow: 0 4px 32px rgba(255,26,179,0.08), inset 0 1px 0 rgba(255,26,179,0.06) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SHARED INPUT OVERRIDES — Aurora + Clay get softer form fields
+   ═══════════════════════════════════════════════════════════════════════ */
+html[data-style="aurora"] .ui-input,
+html[data-style="aurora"] .ui-textarea {
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.65) !important;
+  border-color: rgba(109,91,255,0.18) !important;
+  border-radius: 14px !important;
+}
+html[data-style="aurora"] .ui-input:focus,
+html[data-style="aurora"] .ui-textarea:focus {
+  background: rgba(255,255,255,0.85) !important;
+  border-color: rgba(109,91,255,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(109,91,255,0.12), 0 4px 16px rgba(109,91,255,0.08) !important;
+}
+
+html[data-style="clay"] .ui-input,
+html[data-style="clay"] .ui-textarea {
+  border-color: rgba(180,80,20,0.22) !important;
+  border-radius: 16px !important;
+}
+html[data-style="clay"] .ui-input:focus,
+html[data-style="clay"] .ui-textarea:focus {
+  border-color: rgba(180,80,20,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(180,80,20,0.08) !important;
+}
+
+html[data-style="neon-noir"] .ui-input,
+html[data-style="neon-noir"] .ui-textarea {
+  border-color: rgba(255,26,179,0.22) !important;
+  background: hsl(300,10%,5%) !important;
+}
+html[data-style="neon-noir"] .ui-input:focus,
+html[data-style="neon-noir"] .ui-textarea:focus {
+  border-color: rgba(255,26,179,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(255,26,179,0.12), 0 0 16px rgba(255,26,179,0.08) !important;
+}
+
+html[data-style="synthwave"] .ui-input,
+html[data-style="synthwave"] .ui-textarea {
+  background: hsl(258,40%,11%) !important;
+  border-color: rgba(255,26,179,0.22) !important;
+}
+html[data-style="synthwave"] .ui-input:focus,
+html[data-style="synthwave"] .ui-textarea:focus {
+  border-color: rgba(0,229,255,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.12), 0 0 16px rgba(255,26,179,0.08) !important;
+}
