@@ -1,63 +1,89 @@
-"use client"
+'use client'
 
-import { useTranslations } from "next-intl"
-import { LayerReveal } from "@/components/composite/layer-reveal"
-import { AnimatedCounter } from "@/components/composite/animated-counter"
-import { personalInfo, stats, education, experience } from "@/lib/data"
-import { GraduationCapIcon, MapPinIcon, MailIcon, BuildingIcon } from "@/icons"
+import { useTranslations } from 'next-intl'
+import { LayerReveal } from '@/components/composite/layer-reveal'
+import { AnimatedCounter } from '@/components/composite/animated-counter'
+import { personalInfo, stats, education, experience } from '@/lib/data'
+import { GraduationCapIcon, MapPinIcon, MailIcon, BuildingIcon } from '@/icons'
 
-const DOMAINS = ["fintech", "blockchain", "web3", "kyc / id-tech", "edtech"]
+const DOMAINS = ['fintech', 'blockchain', 'web3', 'kyc / id-tech', 'edtech']
 
 export function AboutCompact() {
-  const t = useTranslations("about")
+  const t = useTranslations('about')
 
   return (
     <section id="about" className="py-24">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-
+      <div className="mx-auto max-w-7xl px-8 lg:px-16">
         <LayerReveal>
-          <div className="flex items-center gap-4 mb-14">
-            <span className="section-label">{t("title")}</span>
-            <div className="h-px flex-1 max-w-[120px]" style={{ background: "linear-gradient(to right, rgba(0,255,218,0.2), transparent)" }}/>
+          <div className="mb-14 flex items-center gap-4">
+            <span className="section-label">{t('title')}</span>
+            <div
+              className="h-px max-w-[120px] flex-1"
+              style={{ background: 'linear-gradient(to right, rgba(0,255,218,0.2), transparent)' }}
+            />
           </div>
         </LayerReveal>
 
-        <div className="grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-16">
-
+        <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
           {/* LEFT: bio */}
           <LayerReveal delay={60}>
             <div>
-              <p className="text-2xl font-bold leading-snug mb-6" style={{ color: "hsl(var(--text-heading))" }}>
+              <p
+                className="mb-6 text-2xl font-bold leading-snug"
+                style={{ color: 'hsl(var(--text-heading))' }}
+              >
                 {personalInfo.tagline}
               </p>
 
-              <div className="w-10 h-0.5 mb-6 rounded-full" style={{ background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)))" }}/>
+              <div
+                className="mb-6 h-0.5 w-10 rounded-full"
+                style={{
+                  background: 'linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)))',
+                }}
+              />
 
-              <p className="text-base leading-[1.85] mb-5" style={{ color: "hsl(var(--text-body))" }}>
-                {t("bio")}
+              <p
+                className="mb-5 text-base leading-[1.85]"
+                style={{ color: 'hsl(var(--text-body))' }}
+              >
+                {t('bio')}
               </p>
-              <p className="text-base leading-[1.85] mb-8" style={{ color: "hsl(var(--text-body))" }}>
-                My background spans fintech (Payram), blockchain infrastructure (Xalts), Web3 platforms,
-                KYC systems, and edtech — with a common thread: owning the full stack and shipping things that matter.
+              <p
+                className="mb-8 text-base leading-[1.85]"
+                style={{ color: 'hsl(var(--text-body))' }}
+              >
+                My background spans fintech (Payram), blockchain infrastructure (Xalts), Web3
+                platforms, KYC systems, and edtech — with a common thread: owning the full stack and
+                shipping things that matter.
               </p>
 
-              <div className="flex flex-wrap gap-2 mb-8">
-                {DOMAINS.map(d => (
-                  <span key={d} className="text-xs px-3 py-1.5 rounded-full font-mono"
-                    style={{ background: "hsl(var(--surface-2))", border: "1px solid rgba(0,255,218,0.12)", color: "hsl(var(--text-muted))" }}>
+              <div className="mb-8 flex flex-wrap gap-2">
+                {DOMAINS.map((d) => (
+                  <span
+                    key={d}
+                    className="rounded-full px-3 py-1.5 font-mono text-xs"
+                    style={{
+                      background: 'hsl(var(--surface-2))',
+                      border: '1px solid rgba(0,255,218,0.12)',
+                      color: 'hsl(var(--text-muted))',
+                    }}
+                  >
                     {d}
                   </span>
                 ))}
               </div>
 
               {/* Stats inline */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {stats.map((s) => (
                   <div key={s.label} className="flex flex-col gap-0.5">
-                    <span className="text-3xl font-black font-mono gradient-text leading-none">
+                    <span className="gradient-text font-mono text-3xl font-black leading-none">
                       <AnimatedCounter value={s.value} />
                     </span>
-                    <span className="text-[9px] font-mono uppercase tracking-widest" style={{ color: "hsl(var(--text-dim))" }}>
+                    <span
+                      className="font-mono text-[9px] uppercase tracking-widest"
+                      style={{ color: 'hsl(var(--text-dim))' }}
+                    >
                       {s.label}
                     </span>
                   </div>
@@ -69,71 +95,133 @@ export function AboutCompact() {
           {/* RIGHT: stacked info cards */}
           <LayerReveal delay={140}>
             <div className="flex flex-col gap-3">
-
               {/* Education */}
               <div
-                className="rounded-2xl p-5 flex items-start gap-4"
-                style={{ background: "hsl(var(--surface))", border: "1px solid rgba(0,255,218,0.1)" }}
+                className="flex items-start gap-4 rounded-2xl p-5"
+                style={{
+                  background: 'hsl(var(--surface))',
+                  border: '1px solid rgba(0,255,218,0.1)',
+                }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(0,255,218,0.07)", border: "1px solid rgba(0,255,218,0.14)" }}>
-                  <GraduationCapIcon className="w-4.5 h-4.5" style={{ color: "hsl(var(--primary))" }} />
+                <div
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+                  style={{
+                    background: 'rgba(0,255,218,0.07)',
+                    border: '1px solid rgba(0,255,218,0.14)',
+                  }}
+                >
+                  <GraduationCapIcon
+                    className="w-4.5 h-4.5"
+                    style={{ color: 'hsl(var(--primary))' }}
+                  />
                 </div>
                 <div>
-                  <p className="text-[9px] font-mono uppercase tracking-widest mb-0.5" style={{ color: "hsl(var(--text-muted))" }}>{t("education")}</p>
-                  <p className="text-sm font-bold" style={{ color: "hsl(var(--text-heading))" }}>{education.shortName}</p>
-                  <p className="text-xs" style={{ color: "hsl(var(--text-body))" }}>{education.degree} · {education.period}</p>
+                  <p
+                    className="mb-0.5 font-mono text-[9px] uppercase tracking-widest"
+                    style={{ color: 'hsl(var(--text-muted))' }}
+                  >
+                    {t('education')}
+                  </p>
+                  <p className="text-sm font-bold" style={{ color: 'hsl(var(--text-heading))' }}>
+                    {education.shortName}
+                  </p>
+                  <p className="text-xs" style={{ color: 'hsl(var(--text-body))' }}>
+                    {education.degree} · {education.period}
+                  </p>
                 </div>
               </div>
 
               {/* Location */}
               <div
-                className="rounded-2xl p-5 flex items-center gap-4"
-                style={{ background: "hsl(var(--surface))", border: "1px solid rgba(0,255,218,0.1)" }}
+                className="flex items-center gap-4 rounded-2xl p-5"
+                style={{
+                  background: 'hsl(var(--surface))',
+                  border: '1px solid rgba(0,255,218,0.1)',
+                }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(0,255,218,0.07)", border: "1px solid rgba(0,255,218,0.14)" }}>
-                  <MapPinIcon className="w-4.5 h-4.5" style={{ color: "hsl(var(--primary))" }} />
+                <div
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+                  style={{
+                    background: 'rgba(0,255,218,0.07)',
+                    border: '1px solid rgba(0,255,218,0.14)',
+                  }}
+                >
+                  <MapPinIcon className="w-4.5 h-4.5" style={{ color: 'hsl(var(--primary))' }} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold" style={{ color: "hsl(var(--text-heading))" }}>India · Remote</p>
-                  <p className="text-xs font-mono" style={{ color: "hsl(var(--text-muted))" }}>Open to remote worldwide</p>
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: 'hsl(var(--text-heading))' }}
+                  >
+                    India · Remote
+                  </p>
+                  <p className="font-mono text-xs" style={{ color: 'hsl(var(--text-muted))' }}>
+                    Open to remote worldwide
+                  </p>
                 </div>
               </div>
 
               {/* Email */}
               <div
-                className="rounded-2xl p-5 flex items-center gap-4"
-                style={{ background: "hsl(var(--surface))", border: "1px solid rgba(0,255,218,0.1)" }}
+                className="flex items-center gap-4 rounded-2xl p-5"
+                style={{
+                  background: 'hsl(var(--surface))',
+                  border: '1px solid rgba(0,255,218,0.1)',
+                }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(0,255,218,0.07)", border: "1px solid rgba(0,255,218,0.14)" }}>
-                  <MailIcon className="w-4.5 h-4.5" style={{ color: "hsl(var(--accent))" }} />
+                <div
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+                  style={{
+                    background: 'rgba(0,255,218,0.07)',
+                    border: '1px solid rgba(0,255,218,0.14)',
+                  }}
+                >
+                  <MailIcon className="w-4.5 h-4.5" style={{ color: 'hsl(var(--accent))' }} />
                 </div>
                 <div>
-                  <p className="text-[9px] font-mono uppercase tracking-widest mb-0.5" style={{ color: "hsl(var(--text-muted))" }}>Email</p>
-                  <p className="text-xs font-mono" style={{ color: "hsl(var(--text-body))" }}>{personalInfo.email}</p>
+                  <p
+                    className="mb-0.5 font-mono text-[9px] uppercase tracking-widest"
+                    style={{ color: 'hsl(var(--text-muted))' }}
+                  >
+                    Email
+                  </p>
+                  <p className="font-mono text-xs" style={{ color: 'hsl(var(--text-body))' }}>
+                    {personalInfo.email}
+                  </p>
                 </div>
               </div>
 
               {/* Current role */}
               <div
-                className="rounded-2xl p-5 flex items-start gap-4"
-                style={{ background: "rgba(52,211,153,0.04)", border: "1px solid rgba(52,211,153,0.16)" }}
+                className="flex items-start gap-4 rounded-2xl p-5"
+                style={{
+                  background: 'rgba(52,211,153,0.04)',
+                  border: '1px solid rgba(52,211,153,0.16)',
+                }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)" }}>
-                  <BuildingIcon className="w-4.5 h-4.5" style={{ color: "hsl(152,60%,65%)" }} />
+                <div
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+                  style={{
+                    background: 'rgba(52,211,153,0.08)',
+                    border: '1px solid rgba(52,211,153,0.2)',
+                  }}
+                >
+                  <BuildingIcon className="w-4.5 h-4.5" style={{ color: 'hsl(152,60%,65%)' }} />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <p className="text-[9px] font-mono uppercase tracking-widest" style={{ color: "hsl(152,60%,65%)" }}>Current</p>
+                  <div className="mb-0.5 flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                    <p
+                      className="font-mono text-[9px] uppercase tracking-widest"
+                      style={{ color: 'hsl(152,60%,65%)' }}
+                    >
+                      Current
+                    </p>
                   </div>
-                  <p className="text-sm font-bold" style={{ color: "hsl(var(--text-heading))" }}>
+                  <p className="text-sm font-bold" style={{ color: 'hsl(var(--text-heading))' }}>
                     {experience[0]?.role}
                   </p>
-                  <p className="text-xs" style={{ color: "hsl(var(--text-muted))" }}>
+                  <p className="text-xs" style={{ color: 'hsl(var(--text-muted))' }}>
                     {experience[0]?.company} · {experience[0]?.period}
                   </p>
                 </div>
@@ -142,25 +230,34 @@ export function AboutCompact() {
               {/* Available banner */}
               <div
                 className="rounded-2xl p-4"
-                style={{ background: "hsl(var(--surface))", border: "1px solid rgba(0,255,218,0.08)" }}
+                style={{
+                  background: 'hsl(var(--surface))',
+                  border: '1px solid rgba(0,255,218,0.08)',
+                }}
               >
-                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--text-body))" }}>
-                  Looking for a senior / lead engineering role — fintech, infra, or platform teams. Remote-first, open to Dubai / international.
+                <p className="text-xs leading-relaxed" style={{ color: 'hsl(var(--text-body))' }}>
+                  Looking for a senior / lead engineering role — fintech, infra, or platform teams.
+                  Remote-first, open to Dubai / international.
                 </p>
-                <div className="flex flex-wrap gap-1.5 mt-2.5">
-                  {["Full-Stack", "Platform", "Golang", "Next.js"].map(tag => (
-                    <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full font-mono"
-                      style={{ background: "rgba(0,255,218,0.07)", border: "1px solid rgba(0,255,218,0.12)", color: "hsl(var(--primary))" }}>
+                <div className="mt-2.5 flex flex-wrap gap-1.5">
+                  {['Full-Stack', 'Platform', 'Golang', 'Next.js'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full px-2 py-0.5 font-mono text-[10px]"
+                      style={{
+                        background: 'rgba(0,255,218,0.07)',
+                        border: '1px solid rgba(0,255,218,0.12)',
+                        color: 'hsl(var(--primary))',
+                      }}
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
               </div>
-
             </div>
           </LayerReveal>
         </div>
-
       </div>
     </section>
   )

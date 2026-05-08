@@ -1,39 +1,41 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useTranslations } from "next-intl"
-import { motion, AnimatePresence } from "framer-motion"
-import { LayerReveal } from "@/components/composite/layer-reveal"
-import { experience } from "@/lib/data"
-import { ChevronDownIcon } from "@/icons"
+import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LayerReveal } from '@/components/composite/layer-reveal'
+import { experience } from '@/lib/data'
+import { ChevronDownIcon } from '@/icons'
 
 const COMPANY_ACCENT: Record<string, string> = {
-  "Payram":          "hsl(174,100%,50%)",
-  "Xalts":           "hsl(199,89%,60%)",
-  "Create Protocol": "hsl(271,70%,65%)",
-  "Credenc":         "hsl(38,92%,58%)",
-  "invoid":          "hsl(160,60%,55%)",
+  Payram: 'hsl(174,100%,50%)',
+  Xalts: 'hsl(199,89%,60%)',
+  'Create Protocol': 'hsl(271,70%,65%)',
+  Credenc: 'hsl(38,92%,58%)',
+  invoid: 'hsl(160,60%,55%)',
 }
 
 export function ExperienceCompact() {
-  const t = useTranslations("experience")
+  const t = useTranslations('experience')
   const [openIdx, setOpenIdx] = useState<number | null>(0)
 
   return (
     <section id="experience" className="py-24">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-
+      <div className="mx-auto max-w-7xl px-8 lg:px-16">
         <LayerReveal>
-          <div className="flex flex-wrap items-center gap-4 mb-14">
-            <span className="section-label">{t("title")}</span>
-            <div className="h-px flex-1 max-w-[120px]" style={{ background: "linear-gradient(to right, rgba(0,255,218,0.2), transparent)" }}/>
+          <div className="mb-14 flex flex-wrap items-center gap-4">
+            <span className="section-label">{t('title')}</span>
+            <div
+              className="h-px max-w-[120px] flex-1"
+              style={{ background: 'linear-gradient(to right, rgba(0,255,218,0.2), transparent)' }}
+            />
           </div>
         </LayerReveal>
 
         {/* Dense list */}
-        <div className="max-w-3xl divide-y" style={{ borderColor: "rgba(0,255,218,0.06)" }}>
+        <div className="max-w-3xl divide-y" style={{ borderColor: 'rgba(0,255,218,0.06)' }}>
           {experience.map((item, i) => {
-            const accent = COMPANY_ACCENT[item.company] ?? "hsl(174,100%,50%)"
+            const accent = COMPANY_ACCENT[item.company] ?? 'hsl(174,100%,50%)'
             const isOpen = openIdx === i
 
             return (
@@ -41,30 +43,52 @@ export function ExperienceCompact() {
                 <div>
                   {/* Row */}
                   <button
-                    className="w-full flex items-center gap-4 py-4 text-left cursor-pointer group"
+                    className="group flex w-full cursor-pointer items-center gap-4 py-4 text-left"
                     onClick={() => setOpenIdx(isOpen ? null : i)}
                   >
                     {/* Accent bar */}
-                    <div className="flex-shrink-0 w-1 h-10 rounded-full transition-all duration-300"
-                      style={{ background: isOpen ? accent : "rgba(0,255,218,0.12)" }}/>
+                    <div
+                      className="h-10 w-1 flex-shrink-0 rounded-full transition-all duration-300"
+                      style={{ background: isOpen ? accent : 'rgba(0,255,218,0.12)' }}
+                    />
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-sm font-black" style={{ color: "hsl(var(--text-heading))" }}>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-baseline gap-2">
+                        <span
+                          className="text-sm font-black"
+                          style={{ color: 'hsl(var(--text-heading))' }}
+                        >
                           {item.company}
                         </span>
                         {item.current && (
-                          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full"
-                            style={{ background: "rgba(52,211,153,0.1)", color: "hsl(152,60%,65%)" }}>
+                          <span
+                            className="rounded-full px-1.5 py-0.5 font-mono text-[9px]"
+                            style={{
+                              background: 'rgba(52,211,153,0.1)',
+                              color: 'hsl(152,60%,65%)',
+                            }}
+                          >
                             now
                           </span>
                         )}
-                        <span className="text-xs font-mono" style={{ color: accent }}>· {item.role}</span>
+                        <span className="font-mono text-xs" style={{ color: accent }}>
+                          · {item.role}
+                        </span>
                       </div>
-                      <div className="flex items-center gap-3 mt-0.5">
-                        <span className="text-[11px] font-mono" style={{ color: "hsl(var(--text-dim))" }}>{item.period}</span>
-                        <span className="text-[11px] font-mono" style={{ color: "hsl(var(--text-dim))" }}>· {item.location}</span>
+                      <div className="mt-0.5 flex items-center gap-3">
+                        <span
+                          className="font-mono text-[11px]"
+                          style={{ color: 'hsl(var(--text-dim))' }}
+                        >
+                          {item.period}
+                        </span>
+                        <span
+                          className="font-mono text-[11px]"
+                          style={{ color: 'hsl(var(--text-dim))' }}
+                        >
+                          · {item.location}
+                        </span>
                       </div>
                     </div>
 
@@ -74,8 +98,10 @@ export function ExperienceCompact() {
                       transition={{ duration: 0.25 }}
                       className="flex-shrink-0"
                     >
-                      <ChevronDownIcon className="w-4 h-4 opacity-30 group-hover:opacity-60 transition-opacity"
-                        style={{ color: "hsl(var(--text-muted))" }}/>
+                      <ChevronDownIcon
+                        className="h-4 w-4 opacity-30 transition-opacity group-hover:opacity-60"
+                        style={{ color: 'hsl(var(--text-muted))' }}
+                      />
                     </motion.div>
                   </button>
 
@@ -85,12 +111,12 @@ export function ExperienceCompact() {
                       <motion.div
                         key="expanded"
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
+                        animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pb-4 pl-5 space-y-2">
+                        <div className="space-y-2 pb-4 pl-5">
                           {item.bullets.map((bullet, bi) => (
                             <motion.div
                               key={bi}
@@ -99,8 +125,16 @@ export function ExperienceCompact() {
                               transition={{ duration: 0.2, delay: bi * 0.035 }}
                               className="flex items-start gap-2.5"
                             >
-                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[7px]" style={{ background: accent, opacity: 0.55 }}/>
-                              <p className="text-sm leading-relaxed" style={{ color: "hsl(var(--text-body))" }}>{bullet}</p>
+                              <span
+                                className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                                style={{ background: accent, opacity: 0.55 }}
+                              />
+                              <p
+                                className="text-sm leading-relaxed"
+                                style={{ color: 'hsl(var(--text-body))' }}
+                              >
+                                {bullet}
+                              </p>
                             </motion.div>
                           ))}
                         </div>
@@ -112,7 +146,6 @@ export function ExperienceCompact() {
             )
           })}
         </div>
-
       </div>
     </section>
   )

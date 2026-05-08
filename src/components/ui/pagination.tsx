@@ -1,12 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-react"
+import * as React from 'react'
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
 export interface PaginationProps {
   page: number
@@ -16,11 +11,7 @@ export interface PaginationProps {
   showEdges?: boolean
 }
 
-function getPageRange(
-  current: number,
-  total: number,
-  maxVisible: number
-): (number | "...")[] {
+function getPageRange(current: number, total: number, maxVisible: number): (number | '...')[] {
   if (total <= maxVisible) {
     return Array.from({ length: total }, (_, i) => i + 1)
   }
@@ -34,11 +25,11 @@ function getPageRange(
     start = Math.max(1, end - maxVisible + 1)
   }
 
-  const pages: (number | "...")[] = []
+  const pages: (number | '...')[] = []
 
   if (start > 1) {
     pages.push(1)
-    if (start > 2) pages.push("...")
+    if (start > 2) pages.push('...')
   }
 
   for (let i = start; i <= end; i++) {
@@ -46,7 +37,7 @@ function getPageRange(
   }
 
   if (end < total) {
-    if (end < total - 1) pages.push("...")
+    if (end < total - 1) pages.push('...')
     pages.push(total)
   }
 
@@ -71,7 +62,7 @@ export function Pagination({
     <nav className="ui-pagination" aria-label="Pagination">
       {showEdges && (
         <button
-          className={`ui-page-btn${page === 1 ? " disabled" : ""}`}
+          className={`ui-page-btn${page === 1 ? 'disabled' : ''}`}
           disabled={page === 1}
           onClick={() => go(1)}
           aria-label="First page"
@@ -80,7 +71,7 @@ export function Pagination({
         </button>
       )}
       <button
-        className={`ui-page-btn${page === 1 ? " disabled" : ""}`}
+        className={`ui-page-btn${page === 1 ? 'disabled' : ''}`}
         disabled={page === 1}
         onClick={() => go(page - 1)}
         aria-label="Previous page"
@@ -89,24 +80,24 @@ export function Pagination({
       </button>
 
       {pages.map((p, i) =>
-        p === "..." ? (
+        p === '...' ? (
           <span key={`ellipsis-${i}`} className="ui-page-ellipsis">
             …
           </span>
         ) : (
           <button
             key={p}
-            className={`ui-page-btn${p === page ? " active" : ""}`}
+            className={`ui-page-btn${p === page ? 'active' : ''}`}
             onClick={() => go(p as number)}
-            aria-current={p === page ? "page" : undefined}
+            aria-current={p === page ? 'page' : undefined}
           >
             {p}
           </button>
-        )
+        ),
       )}
 
       <button
-        className={`ui-page-btn${page === totalPages ? " disabled" : ""}`}
+        className={`ui-page-btn${page === totalPages ? 'disabled' : ''}`}
         disabled={page === totalPages}
         onClick={() => go(page + 1)}
         aria-label="Next page"
@@ -115,7 +106,7 @@ export function Pagination({
       </button>
       {showEdges && (
         <button
-          className={`ui-page-btn${page === totalPages ? " disabled" : ""}`}
+          className={`ui-page-btn${page === totalPages ? 'disabled' : ''}`}
           disabled={page === totalPages}
           onClick={() => go(totalPages)}
           aria-label="Last page"

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 /**
  * LayerReveal — Scroll Theater pattern.
@@ -6,14 +6,14 @@
  * Elements rise + blur-clear as they enter the viewport.
  */
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 
 interface LayerRevealProps {
   children: React.ReactNode
   className?: string
   delay?: number
-  direction?: "up" | "left" | "right"
+  direction?: 'up' | 'left' | 'right'
   distance?: number
 }
 
@@ -21,22 +21,20 @@ export function LayerReveal({
   children,
   className,
   delay = 0,
-  direction = "up",
+  direction = 'up',
   distance = 40,
 }: LayerRevealProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   const initial = {
     opacity: 0,
-    y: direction === "up" ? distance : 0,
-    x: direction === "left" ? -distance : direction === "right" ? distance : 0,
-    filter: "blur(4px)",
+    y: direction === 'up' ? distance : 0,
+    x: direction === 'left' ? -distance : direction === 'right' ? distance : 0,
+    filter: 'blur(4px)',
   }
 
-  const animate = isInView
-    ? { opacity: 1, y: 0, x: 0, filter: "blur(0px)" }
-    : initial
+  const animate = isInView ? { opacity: 1, y: 0, x: 0, filter: 'blur(0px)' } : initial
 
   return (
     <motion.div

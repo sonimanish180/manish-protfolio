@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface Cube3DProps {
   /** Side length in px (default 120) */
@@ -34,33 +34,34 @@ export function Cube3D({
     `rotateX(-90deg) translateZ(${half}px)`,
   ]
 
-  const faceLabels = ["F", "R", "B", "L", "T", "D"]
+  const faceLabels = ['F', 'R', 'B', 'L', 'T', 'D']
 
   return (
     <div
       className={cn(className)}
-      style={{ width: size, height: size, perspective: `${size * 5}px`, perspectiveOrigin: "50% 50%" }}
+      style={{
+        width: size,
+        height: size,
+        perspective: `${size * 5}px`,
+        perspectiveOrigin: '50% 50%',
+      }}
     >
       <div
-        className={`ui-cube${pauseOnHover ? " ui-cube--pause-hover" : ""}`}
+        className={`ui-cube${pauseOnHover ? 'ui-cube--pause-hover' : ''}`}
         style={
           {
             width: size,
             height: size,
-            "--cube-duration": `${duration}s`,
+            '--cube-duration': `${duration}s`,
           } as React.CSSProperties
         }
       >
         {faceTransforms.map((transform, i) => (
-          <div
-            key={i}
-            className="ui-cube-face"
-            style={{ width: size, height: size, transform }}
-          >
+          <div key={i} className="ui-cube-face" style={{ width: size, height: size, transform }}>
             {faces?.[i] ?? (
               <span
-                className="font-mono font-bold text-sm"
-                style={{ color: "hsl(var(--primary))" }}
+                className="font-mono text-sm font-bold"
+                style={{ color: 'hsl(var(--primary))' }}
               >
                 {faceLabels[i]}
               </span>

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 /**
  * AnimatedCounter — Kinetic motion enhancement (cross-system pattern).
@@ -11,12 +11,12 @@
  * under "Motion Enhancements (cross-system)".
  */
 
-import { useRef, useEffect, useState } from "react"
-import { useInView } from "framer-motion"
+import { useRef, useEffect, useState } from 'react'
+import { useInView } from 'framer-motion'
 
 function parseValue(raw: string): { n: number; pre: string; suf: string } {
   const m = raw.match(/^([~]?)(\d+)([+%]*)$/)
-  if (!m) return { n: 0, pre: "", suf: raw }
+  if (!m) return { n: 0, pre: '', suf: raw }
   return { n: parseInt(m[2]), pre: m[1], suf: m[3] }
 }
 

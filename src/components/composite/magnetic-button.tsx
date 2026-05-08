@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 /**
  * MagneticButton — Kinetic motion enhancement (cross-system pattern).
@@ -9,8 +9,8 @@
  * under a "Motion Enhancements (cross-system)" section.
  */
 
-import { useRef } from "react"
-import { motion, useMotionValue, useSpring } from "framer-motion"
+import { useRef } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 interface MagneticButtonProps {
   children: React.ReactNode
@@ -49,7 +49,7 @@ export function MagneticButton({
     <motion.div
       ref={ref}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      style={{ x: springX, y: springY, display: "inline-flex" } as any}
+      style={{ x: springX, y: springY, display: 'inline-flex' } as any}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       whileTap={{ scale: 0.95 }}

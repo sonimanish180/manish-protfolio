@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 const SHAPES = [
-  "60% 40% 30% 70% / 60% 30% 70% 40%",
-  "30% 60% 70% 40% / 50% 60% 30% 60%",
-  "50% 40% 60% 40% / 30% 60% 50% 70%",
-  "40% 70% 50% 30% / 60% 40% 70% 30%",
-  "70% 30% 40% 60% / 40% 70% 30% 60%",
+  '60% 40% 30% 70% / 60% 30% 70% 40%',
+  '30% 60% 70% 40% / 50% 60% 30% 60%',
+  '50% 40% 60% 40% / 30% 60% 50% 70%',
+  '40% 70% 50% 30% / 60% 40% 70% 30%',
+  '70% 30% 40% 60% / 40% 70% 30% 60%',
 ]
 
 export interface MorphBlobProps {
@@ -26,27 +26,27 @@ export function MorphBlob({
   animated = true,
   className,
 }: MorphBlobProps) {
-  const [themeColor, setThemeColor] = React.useState("hsl(174,100%,50%)")
+  const [themeColor, setThemeColor] = React.useState('hsl(174,100%,50%)')
   const [shapeIdx, setShapeIdx] = React.useState(0)
 
   React.useEffect(() => {
     function readColor() {
       const hsl = getComputedStyle(document.documentElement)
-        .getPropertyValue("--primary")
+        .getPropertyValue('--primary')
         .trim()
-        .replace(/ /g, ",")
-      setThemeColor(`hsl(${hsl || "174,100%,50%"})`)
+        .replace(/ /g, ',')
+      setThemeColor(`hsl(${hsl || '174,100%,50%'})`)
     }
     readColor()
     const mo = new MutationObserver(readColor)
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-style"] })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-style'] })
     return () => mo.disconnect()
   }, [])
 
   React.useEffect(() => {
     if (!animated) return
     const ms = Math.max(600, 3000 / speed)
-    const id = setInterval(() => setShapeIdx(i => (i + 1) % SHAPES.length), ms)
+    const id = setInterval(() => setShapeIdx((i) => (i + 1) % SHAPES.length), ms)
     return () => clearInterval(id)
   }, [animated, speed])
 
@@ -55,19 +55,19 @@ export function MorphBlob({
 
   return (
     <div
-      className={cn("relative flex items-center justify-center", className)}
+      className={cn('relative flex items-center justify-center', className)}
       style={{ width: size, height: size }}
     >
       {/* Ambient halo */}
       <div
         aria-hidden
         style={{
-          position: "absolute",
-          inset: "-25%",
+          position: 'absolute',
+          inset: '-25%',
           background: `radial-gradient(circle, ${c}1a 0%, transparent 70%)`,
-          filter: "blur(24px)",
-          borderRadius: "50%",
-          pointerEvents: "none",
+          filter: 'blur(24px)',
+          borderRadius: '50%',
+          pointerEvents: 'none',
         }}
       />
 
@@ -82,7 +82,7 @@ export function MorphBlob({
           `,
           boxShadow: `0 0 ${size * 0.12}px ${c}88, 0 0 ${size * 0.3}px ${c}22`,
           transition: `border-radius ${dur}ms cubic-bezier(0.45,0,0.55,1)`,
-          willChange: "border-radius",
+          willChange: 'border-radius',
         }}
       />
 
@@ -90,14 +90,14 @@ export function MorphBlob({
       <div
         aria-hidden
         style={{
-          position: "absolute",
+          position: 'absolute',
           width: size * 0.19,
           height: size * 0.11,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.42)",
-          filter: "blur(4px)",
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.42)',
+          filter: 'blur(4px)',
           transform: `translate(${-size * 0.15}px, ${-size * 0.15}px)`,
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       />
     </div>

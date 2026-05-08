@@ -1,7 +1,7 @@
 // Temporary type shim — run `npm install` to get full framer-motion types.
 // This allows TypeScript to compile until the package is properly installed.
-declare module "framer-motion" {
-  import type { ComponentPropsWithoutRef, ElementType, ReactNode, Ref, CSSProperties } from "react"
+declare module 'framer-motion' {
+  import type { ComponentPropsWithoutRef, ElementType, ReactNode, Ref, CSSProperties } from 'react'
 
   type MotionValue<T = number> = {
     get: () => T
@@ -34,7 +34,13 @@ declare module "framer-motion" {
     whileTap?: TargetAndTransition | VariantLabels
     whileFocus?: TargetAndTransition | VariantLabels
     whileInView?: TargetAndTransition | VariantLabels
-    style?: CSSProperties & { x?: MotionValue<number> | string | number; y?: MotionValue<number> | string | number; rotateX?: MotionValue<number> | string | number; rotateY?: MotionValue<number> | string | number; transformStyle?: string } & Record<string, unknown>
+    style?: CSSProperties & {
+      x?: MotionValue<number> | string | number
+      y?: MotionValue<number> | string | number
+      rotateX?: MotionValue<number> | string | number
+      rotateY?: MotionValue<number> | string | number
+      transformStyle?: string
+    } & Record<string, unknown>
     layoutId?: string
     layout?: boolean | string
     ref?: Ref<unknown>
@@ -57,13 +63,20 @@ declare module "framer-motion" {
 
   export function useInView(
     ref: React.RefObject<Element | null>,
-    options?: { once?: boolean; margin?: string; amount?: number | "some" | "all" }
+    options?: { once?: boolean; margin?: string; amount?: number | 'some' | 'all' },
   ): boolean
 
   export function useMotionValue<T>(initial: T): MotionValue<T>
   export function useSpring(value: MotionValue<number>, config?: Transition): MotionValue<number>
-  export function useTransform<I, O>(value: MotionValue<I>, inputRange: I[], outputRange: O[]): MotionValue<O>
-  export function useScroll(options?: { target?: React.RefObject<Element | null>; offset?: string[] }): {
+  export function useTransform<I, O>(
+    value: MotionValue<I>,
+    inputRange: I[],
+    outputRange: O[],
+  ): MotionValue<O>
+  export function useScroll(options?: {
+    target?: React.RefObject<Element | null>
+    offset?: string[]
+  }): {
     scrollY: MotionValue<number>
     scrollYProgress: MotionValue<number>
     scrollX: MotionValue<number>
@@ -72,7 +85,7 @@ declare module "framer-motion" {
 
   export const AnimatePresence: React.FC<{
     children?: ReactNode
-    mode?: "wait" | "sync" | "popLayout"
+    mode?: 'wait' | 'sync' | 'popLayout'
     initial?: boolean
     onExitComplete?: () => void
   }>

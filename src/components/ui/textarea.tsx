@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
@@ -13,28 +13,34 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 }
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, hint, error, showCount, maxLength, className, wrapperClassName, id, value, ...props }, ref) => {
+  (
+    { label, hint, error, showCount, maxLength, className, wrapperClassName, id, value, ...props },
+    ref,
+  ) => {
     const generatedId = React.useId()
     const textareaId = id ?? generatedId
-    const charCount = typeof value === "string" ? value.length : 0
+    const charCount = typeof value === 'string' ? value.length : 0
 
     return (
-      <div className={cn("flex flex-col gap-1.5", wrapperClassName)}>
+      <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
         {(label || (showCount && maxLength)) && (
           <div className="flex items-center justify-between">
             {label && (
               <label
                 htmlFor={textareaId}
-                className="text-xs font-mono uppercase tracking-wider select-none"
-                style={{ color: "hsl(var(--text-muted))" }}
+                className="select-none font-mono text-xs uppercase tracking-wider"
+                style={{ color: 'hsl(var(--text-muted))' }}
               >
                 {label}
               </label>
             )}
             {showCount && maxLength && (
               <span
-                className="text-xs font-mono tabular-nums"
-                style={{ color: charCount > maxLength * 0.9 ? "hsl(var(--accent))" : "hsl(var(--text-dim))" }}
+                className="font-mono text-xs tabular-nums"
+                style={{
+                  color:
+                    charCount > maxLength * 0.9 ? 'hsl(var(--accent))' : 'hsl(var(--text-dim))',
+                }}
               >
                 {charCount}/{maxLength}
               </span>
@@ -46,22 +52,22 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           id={textareaId}
           value={value}
           maxLength={maxLength}
-          className={cn("ui-textarea", error && "error", className)}
+          className={cn('ui-textarea', error && 'error', className)}
           aria-invalid={!!error}
           {...props}
         />
         {error && (
-          <p className="text-xs" style={{ color: "hsl(var(--destructive))" }}>
+          <p className="text-xs" style={{ color: 'hsl(var(--destructive))' }}>
             {error}
           </p>
         )}
         {!error && hint && (
-          <p className="text-xs" style={{ color: "hsl(var(--text-dim))" }}>
+          <p className="text-xs" style={{ color: 'hsl(var(--text-dim))' }}>
             {hint}
           </p>
         )}
       </div>
     )
-  }
+  },
 )
-Textarea.displayName = "Textarea"
+Textarea.displayName = 'Textarea'

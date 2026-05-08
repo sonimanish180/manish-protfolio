@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface HologramCard3DProps {
   children: React.ReactNode
@@ -21,23 +21,24 @@ export function HologramCard3D({
   flicker = true,
   tilt = true,
 }: HologramCard3DProps) {
-  const [themeColor, setThemeColor] = React.useState("hsl(174,100%,50%)")
+  const [themeColor, setThemeColor] = React.useState('hsl(174,100%,50%)')
   const [hovered, setHovered] = React.useState(false)
   const [scanY, setScanY] = React.useState(0)
   const [opacity, setOpacity] = React.useState(1)
-  const frameRef = React.useRef(0)
   const scanRef = React.useRef(0)
   const timeRef = React.useRef(0)
 
   React.useEffect(() => {
     function readColor() {
       const hsl = getComputedStyle(document.documentElement)
-        .getPropertyValue("--primary").trim().replace(/ /g, ",")
-      setThemeColor(`hsl(${hsl || "174,100%,50%"})`)
+        .getPropertyValue('--primary')
+        .trim()
+        .replace(/ /g, ',')
+      setThemeColor(`hsl(${hsl || '174,100%,50%'})`)
     }
     readColor()
     const mo = new MutationObserver(readColor)
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-style"] })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-style'] })
     return () => mo.disconnect()
   }, [])
 
@@ -65,22 +66,25 @@ export function HologramCard3D({
 
   return (
     <div
-      className={cn("relative", className)}
+      className={cn('relative', className)}
       style={{
-        perspective: "800px",
+        perspective: '800px',
         opacity,
-        transition: "opacity 0.06s linear",
+        transition: 'opacity 0.06s linear',
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div
         style={{
-          transform: tilt && hovered ? "rotateX(4deg) rotateY(-6deg) scale(1.02)" : "rotateX(0) rotateY(0) scale(1)",
-          transition: "transform 0.35s cubic-bezier(0.22,1,0.36,1)",
-          transformStyle: "preserve-3d",
-          position: "relative",
-          borderRadius: "inherit",
+          transform:
+            tilt && hovered
+              ? 'rotateX(4deg) rotateY(-6deg) scale(1.02)'
+              : 'rotateX(0) rotateY(0) scale(1)',
+          transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1)',
+          transformStyle: 'preserve-3d',
+          position: 'relative',
+          borderRadius: 'inherit',
         }}
       >
         {/* Card content */}
@@ -90,9 +94,9 @@ export function HologramCard3D({
         <div
           aria-hidden
           style={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
-            borderRadius: "inherit",
+            borderRadius: 'inherit',
             backgroundImage: `
               repeating-linear-gradient(
                 105deg,
@@ -103,11 +107,11 @@ export function HologramCard3D({
                 transparent 8%
               )
             `,
-            backgroundSize: "200% 100%",
-            backgroundColor: "transparent",
-            animation: "holo-shimmer 3s linear infinite",
-            pointerEvents: "none",
-            mixBlendMode: "screen",
+            backgroundSize: '200% 100%',
+            backgroundColor: 'transparent',
+            animation: 'holo-shimmer 3s linear infinite',
+            pointerEvents: 'none',
+            mixBlendMode: 'screen',
           }}
         />
 
@@ -116,20 +120,20 @@ export function HologramCard3D({
           <div
             aria-hidden
             style={{
-              position: "absolute",
+              position: 'absolute',
               inset: 0,
-              borderRadius: "inherit",
-              overflow: "hidden",
-              pointerEvents: "none",
+              borderRadius: 'inherit',
+              overflow: 'hidden',
+              pointerEvents: 'none',
             }}
           >
             <div
               style={{
-                position: "absolute",
+                position: 'absolute',
                 left: 0,
                 right: 0,
                 top: `${scanY}%`,
-                height: "3px",
+                height: '3px',
                 background: `linear-gradient(90deg, transparent, ${themeColor}55, ${themeColor}99, ${themeColor}55, transparent)`,
                 filter: `blur(1px)`,
                 boxShadow: `0 0 8px ${themeColor}66`,
@@ -142,12 +146,12 @@ export function HologramCard3D({
         <div
           aria-hidden
           style={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
-            borderRadius: "inherit",
+            borderRadius: 'inherit',
             background:
-              "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px)",
-            pointerEvents: "none",
+              'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px)',
+            pointerEvents: 'none',
           }}
         />
 
@@ -155,12 +159,12 @@ export function HologramCard3D({
         <div
           aria-hidden
           style={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
-            borderRadius: "inherit",
+            borderRadius: 'inherit',
             border: `1px solid ${themeColor}44`,
             boxShadow: `0 0 12px ${themeColor}33, inset 0 0 12px ${themeColor}11`,
-            pointerEvents: "none",
+            pointerEvents: 'none',
           }}
         />
       </div>

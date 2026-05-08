@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export function useScrollSpy(sectionIds: string[], offset = 80) {
-  const [activeId, setActiveId] = useState<string>(sectionIds[0] ?? "")
+  const [activeId, setActiveId] = useState<string>(sectionIds[0] ?? '')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,12 +17,12 @@ export function useScrollSpy(sectionIds: string[], offset = 80) {
         }
       }
 
-      setActiveId(sectionIds[0] ?? "")
+      setActiveId(sectionIds[0] ?? '')
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [sectionIds, offset])
 
   return activeId

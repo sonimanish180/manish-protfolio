@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface DNAHelix3DProps {
   /** Canvas width in px (default 200) */
@@ -27,22 +27,24 @@ export function DNAHelix3D({
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
   const frameRef = React.useRef(0)
   const angleRef = React.useRef(0)
-  const colorRef = React.useRef("174,100%,50%")
+  const colorRef = React.useRef('174,100%,50%')
 
   React.useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext('2d')
     if (!ctx) return
 
     function readColor() {
       colorRef.current =
         getComputedStyle(document.documentElement)
-          .getPropertyValue("--primary").trim().replace(/ /g, ",") || "174,100%,50%"
+          .getPropertyValue('--primary')
+          .trim()
+          .replace(/ /g, ',') || '174,100%,50%'
     }
     readColor()
     const mo = new MutationObserver(readColor)
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-style"] })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-style'] })
 
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
@@ -62,7 +64,15 @@ export function DNAHelix3D({
       const vSpacing = h / (pairs + 1)
 
       // Collect all points for both strands and rungs
-      type HelixPoint = { x: number; y: number; z: number; alpha: number; isNode: boolean; rung?: boolean; pair?: number }
+      type HelixPoint = {
+        x: number
+        y: number
+        z: number
+        alpha: number
+        isNode: boolean
+        rung?: boolean
+        pair?: number
+      }
       const points: HelixPoint[] = []
 
       for (let i = 0; i <= pairs; i++) {
@@ -80,15 +90,23 @@ export function DNAHelix3D({
         const bz = Math.sin(baseAngle + Math.PI)
 
         // Depth alpha
-        const alphaA = 0.35 + (az + 1) / 2 * 0.65
-        const alphaB = 0.35 + (bz + 1) / 2 * 0.65
+        const alphaA = 0.35 + ((az + 1) / 2) * 0.65
+        const alphaB = 0.35 + ((bz + 1) / 2) * 0.65
 
         points.push({ x: ax, y, z: az, alpha: alphaA, isNode: true, pair: i })
         points.push({ x: bx, y, z: bz, alpha: alphaB, isNode: true, pair: i })
 
         // Cross-rung connector
         const rungAlpha = 0.2 + Math.max(az, bz) * 0.3
-        points.push({ x: ax, y, z: Math.max(az, bz), alpha: rungAlpha, isNode: false, rung: true, pair: i })
+        points.push({
+          x: ax,
+          y,
+          z: Math.max(az, bz),
+          alpha: rungAlpha,
+          isNode: false,
+          rung: true,
+          pair: i,
+        })
         // store bx in separate pass below
       }
 
@@ -102,7 +120,7 @@ export function DNAHelix3D({
           const y = vSpacing + t * (h - vSpacing * 2)
           const x = cx + Math.cos(baseAngle) * radius
           const z = Math.sin(baseAngle)
-          const alpha = 0.25 + (z + 1) / 2 * 0.55
+          const alpha = 0.25 + ((z + 1) / 2) * 0.55
           if (i === 0) ctx.moveTo(x, y)
           else ctx.lineTo(x, y)
           ctx.strokeStyle = `hsla(${c},${alpha * 0.7})`
@@ -121,10 +139,9 @@ export function DNAHelix3D({
         const bx = cx + Math.cos(baseAngle + Math.PI) * radius
         const az = Math.sin(baseAngle)
 
-        const rungAlpha = 0.15 + (az + 1) / 2 * 0.45
+        const rungAlpha = 0.15 + ((az + 1) / 2) * 0.45
 
         // Two-color rung (base pair colors)
-        const midX = (ax + bx) / 2
         const gradR = ctx.createLinearGradient(ax, y, bx, y)
         gradR.addColorStop(0, `hsla(${c},${rungAlpha})`)
         gradR.addColorStop(0.5, `hsla(${c},${rungAlpha * 1.4})`)
@@ -141,7 +158,7 @@ export function DNAHelix3D({
         const nodeR = 3.5
         for (const nx of [ax, bx]) {
           const nz = nx === ax ? az : Math.sin(baseAngle + Math.PI)
-          const na = 0.45 + (nz + 1) / 2 * 0.55
+          const na = 0.45 + ((nz + 1) / 2) * 0.55
           ctx.beginPath()
           ctx.arc(nx, y, nodeR, 0, Math.PI * 2)
           ctx.fillStyle = `hsla(${c},${na})`
@@ -160,11 +177,5 @@ export function DNAHelix3D({
     }
   }, [speed, pairs, animated])
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className={cn("block", className)}
-      style={{ width, height }}
-    />
-  )
+  return <canvas ref={canvasRef} className={cn('block', className)} style={{ width, height }} />
 }

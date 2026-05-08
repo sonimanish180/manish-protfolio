@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { motion } from "framer-motion"
+import * as React from 'react'
+import { motion } from 'framer-motion'
 
 export interface ProgressProps {
   value: number
   label?: string
   showValue?: boolean
-  variant?: "default" | "success" | "warning" | "error"
-  size?: "sm" | "md" | "lg"
+  variant?: 'default' | 'success' | 'warning' | 'error'
+  size?: 'sm' | 'md' | 'lg'
   animated?: boolean
 }
 
@@ -16,8 +16,8 @@ export function Progress({
   value,
   label,
   showValue,
-  variant = "default",
-  size = "md",
+  variant = 'default',
+  size = 'md',
   animated,
 }: ProgressProps) {
   const clamped = Math.min(100, Math.max(0, value))
@@ -27,9 +27,7 @@ export function Progress({
       {(label || showValue) && (
         <div className="ui-progress-header">
           {label && <span className="ui-progress-label">{label}</span>}
-          {showValue && (
-            <span className="ui-progress-value">{clamped}%</span>
-          )}
+          {showValue && <span className="ui-progress-value">{clamped}%</span>}
         </div>
       )}
       <div
@@ -40,10 +38,10 @@ export function Progress({
         aria-valuemax={100}
       >
         <motion.div
-          className={`ui-progress-fill ui-progress-fill-${variant}${animated ? " animated" : ""}`}
+          className={`ui-progress-fill ui-progress-fill-${variant}${animated ? 'animated' : ''}`}
           initial={{ width: 0 }}
           animate={{ width: `${clamped}%` }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         />
       </div>
     </div>

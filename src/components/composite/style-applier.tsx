@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 /**
  * StyleApplier — applies the current design style as a data-style attribute
@@ -6,18 +6,18 @@
  * Rendered once in page.tsx, invisible, no DOM output.
  */
 
-import { useEffect } from "react"
-import { useUIStore } from "@/stores"
+import { useEffect } from 'react'
+import { useUIStore } from '@/stores'
 
 export function StyleApplier() {
   const currentStyle = useUIStore((s) => s.currentStyle)
 
   useEffect(() => {
     const html = document.documentElement
-    if (currentStyle === "veil") {
-      html.removeAttribute("data-style")
+    if (currentStyle === 'veil') {
+      html.removeAttribute('data-style')
     } else {
-      html.setAttribute("data-style", currentStyle)
+      html.setAttribute('data-style', currentStyle)
     }
   }, [currentStyle])
 
