@@ -76,7 +76,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-20"
     >
       {/* ── Full-bleed NeuralNet3D backdrop ── */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>

@@ -108,7 +108,7 @@ export function HeroTerminal() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-20"
       style={{ background: 'hsl(217,50%,3.5%)' }}
     >
       {/* CRT scan-line overlay */}

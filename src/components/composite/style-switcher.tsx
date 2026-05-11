@@ -93,6 +93,81 @@ const STYLES: StyleDef[] = [
     swatchB: 'hsl(185,100%,55%)',
     bg: 'hsl(260,45%,8%)',
   },
+  // ── Pastel direction ──────────────────────────────────────────────────────
+  {
+    id: 'pastel',
+    label: 'Pastel',
+    description: 'Soft lavender & rose',
+    swatchA: 'hsl(271,70%,72%)',
+    swatchB: 'hsl(340,80%,72%)',
+    bg: 'hsl(280,40%,97%)',
+  },
+  {
+    id: 'cotton',
+    label: 'Cotton',
+    description: 'Powder blue & mint',
+    swatchA: 'hsl(210,80%,62%)',
+    swatchB: 'hsl(160,60%,57%)',
+    bg: 'hsl(210,60%,97%)',
+  },
+  {
+    id: 'blush',
+    label: 'Blush',
+    description: 'Rose pink & warm peach',
+    swatchA: 'hsl(350,80%,67%)',
+    swatchB: 'hsl(30,90%,67%)',
+    bg: 'hsl(350,50%,97%)',
+  },
+  // ── Retro / Pixel direction ───────────────────────────────────────────────
+  {
+    id: 'pixel',
+    label: 'Pixel',
+    description: '8-bit terminal green',
+    swatchA: 'hsl(120,100%,50%)',
+    swatchB: 'hsl(180,100%,50%)',
+    bg: 'hsl(120,20%,4%)',
+  },
+  {
+    id: 'dos',
+    label: 'DOS',
+    description: 'Classic amber CRT',
+    swatchA: 'hsl(36,100%,55%)',
+    swatchB: 'hsl(45,100%,65%)',
+    bg: 'hsl(30,30%,3%)',
+  },
+  {
+    id: 'arcade',
+    label: 'Arcade',
+    description: 'RGB retro game palette',
+    swatchA: 'hsl(55,100%,55%)',
+    swatchB: 'hsl(0,100%,55%)',
+    bg: 'hsl(240,50%,5%)',
+  },
+  // ── Cyberpunk / Acid direction ────────────────────────────────────────────
+  {
+    id: 'cyberpunk',
+    label: 'Cyberpunk',
+    description: 'Neon pink & acid yellow',
+    swatchA: 'hsl(310,100%,62%)',
+    swatchB: 'hsl(55,100%,55%)',
+    bg: 'hsl(270,30%,4%)',
+  },
+  {
+    id: 'acid',
+    label: 'Acid',
+    description: 'Lime & hot magenta',
+    swatchA: 'hsl(80,100%,50%)',
+    swatchB: 'hsl(300,100%,62%)',
+    bg: 'hsl(0,0%,3%)',
+  },
+  {
+    id: 'glitch',
+    label: 'Glitch',
+    description: 'Red/cyan glitch distortion',
+    swatchA: 'hsl(0,100%,55%)',
+    swatchB: 'hsl(180,100%,55%)',
+    bg: 'hsl(200,30%,4%)',
+  },
 ]
 
 export function StyleSwitcher() {
@@ -114,7 +189,7 @@ export function StyleSwitcher() {
             className="style-switcher-panel"
           >
             <p className="style-switcher-heading">Design Systems</p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
               {STYLES.map((style) => {
                 const isActive = currentStyle === style.id
                 return (
