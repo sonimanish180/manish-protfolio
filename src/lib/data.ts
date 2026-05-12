@@ -4,7 +4,7 @@ export const personalInfo = {
   subtitle: 'Product & Platform Architecture',
   email: 'msoni@ar.iitr.ac.in',
   phone: '+91 8960072136',
-  linkedin: 'https://www.linkedin.com/in/manish-soni',
+  linkedin: 'https://www.linkedin.com/in/manish-soni-03aa3b12a/',
   tagline:
     'Product-focused engineer specializing in 0→1 products and scalable platform architecture. I build end-to-end systems that ship.',
   roles: [
