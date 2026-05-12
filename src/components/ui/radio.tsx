@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface RadioOption {
   value: string
@@ -16,7 +16,7 @@ export interface RadioGroupProps {
   options: RadioOption[]
   value?: string
   onChange?: (value: string) => void
-  orientation?: "vertical" | "horizontal"
+  orientation?: 'vertical' | 'horizontal'
   className?: string
 }
 
@@ -26,17 +26,22 @@ export function RadioGroup({
   options,
   value,
   onChange,
-  orientation = "vertical",
+  orientation = 'vertical',
   className,
 }: RadioGroupProps) {
   return (
-    <fieldset className={cn("border-0 p-0 m-0", className)}>
+    <fieldset className={cn('m-0 border-0 p-0', className)}>
       {label && (
-        <legend className="text-xs font-mono uppercase tracking-wider mb-2.5 select-none" style={{ color: "hsl(var(--text-muted))" }}>
+        <legend
+          className="mb-2.5 select-none font-mono text-xs uppercase tracking-wider"
+          style={{ color: 'hsl(var(--text-muted))' }}
+        >
           {label}
         </legend>
       )}
-      <div className={cn("flex gap-3", orientation === "vertical" ? "flex-col" : "flex-row flex-wrap")}>
+      <div
+        className={cn('flex gap-3', orientation === 'vertical' ? 'flex-col' : 'flex-row flex-wrap')}
+      >
         {options.map((opt) => (
           <RadioItem
             key={opt.value}
@@ -78,13 +83,13 @@ function RadioItem({
       <div className="flex flex-col gap-0.5">
         <label
           htmlFor={radioId}
-          className="text-sm font-medium cursor-pointer select-none leading-tight"
-          style={{ color: option.disabled ? "hsl(var(--text-dim))" : "hsl(var(--text-heading))" }}
+          className="cursor-pointer select-none text-sm font-medium leading-tight"
+          style={{ color: option.disabled ? 'hsl(var(--text-dim))' : 'hsl(var(--text-heading))' }}
         >
           {option.label}
         </label>
         {option.description && (
-          <span className="text-xs leading-relaxed" style={{ color: "hsl(var(--text-muted))" }}>
+          <span className="text-xs leading-relaxed" style={{ color: 'hsl(var(--text-muted))' }}>
             {option.description}
           </span>
         )}

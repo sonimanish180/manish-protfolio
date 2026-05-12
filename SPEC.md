@@ -12,15 +12,15 @@
 
 ## Sections
 
-| Section | Component | Notes |
-|---|---|---|
-| Nav | `_components/nav.tsx` | Sticky, scroll-spy, mobile menu |
-| Hero | `_components/hero-section.tsx` | Typewriter roles, animated reveal |
-| About | `_components/about-section.tsx` | Bio, stats, education |
-| Experience | `_components/experience-section.tsx` | Interactive expanding timeline |
-| Skills | `_components/skills-section.tsx` | Categorised coloured badges |
-| Projects | `_components/projects-section.tsx` | Card grid, hover glow |
-| Contact | `_components/contact-section.tsx` | Copy email, LinkedIn link |
+| Section    | Component                            | Notes                             |
+| ---------- | ------------------------------------ | --------------------------------- |
+| Nav        | `_components/nav.tsx`                | Sticky, scroll-spy, mobile menu   |
+| Hero       | `_components/hero-section.tsx`       | Typewriter roles, animated reveal |
+| About      | `_components/about-section.tsx`      | Bio, stats, education             |
+| Experience | `_components/experience-section.tsx` | Interactive expanding timeline    |
+| Skills     | `_components/skills-section.tsx`     | Categorised coloured badges       |
+| Projects   | `_components/projects-section.tsx`   | Card grid, hover glow             |
+| Contact    | `_components/contact-section.tsx`    | Copy email, LinkedIn link         |
 
 ## Design System: Carbon Dark
 

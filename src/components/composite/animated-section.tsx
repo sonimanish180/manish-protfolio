@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import { cn } from "@/lib/utils"
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { cn } from '@/lib/utils'
 
 interface AnimatedSectionProps {
   children: React.ReactNode
@@ -13,7 +13,7 @@ interface AnimatedSectionProps {
 // Kinetic — RevealSection pattern using Framer Motion useInView
 export function AnimatedSection({ children, className, delay = 0 }: AnimatedSectionProps) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
     <motion.div

@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { createPortal } from "react-dom"
-import { motion, AnimatePresence } from "framer-motion"
+import * as React from 'react'
+import { createPortal } from 'react-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export interface TooltipProps {
   content: React.ReactNode
   children: React.ReactElement
-  placement?: "top" | "bottom" | "left" | "right"
+  placement?: 'top' | 'bottom' | 'left' | 'right'
   delay?: number
 }
 
@@ -16,28 +16,25 @@ interface TooltipPosition {
   left: number
 }
 
-function getPosition(
-  rect: DOMRect,
-  placement: TooltipProps["placement"]
-): TooltipPosition {
+function getPosition(rect: DOMRect, placement: TooltipProps['placement']): TooltipPosition {
   const gap = 8
   switch (placement) {
-    case "bottom":
+    case 'bottom':
       return {
         top: rect.bottom + gap + window.scrollY,
         left: rect.left + rect.width / 2 + window.scrollX,
       }
-    case "left":
+    case 'left':
       return {
         top: rect.top + rect.height / 2 + window.scrollY,
         left: rect.left - gap + window.scrollX,
       }
-    case "right":
+    case 'right':
       return {
         top: rect.top + rect.height / 2 + window.scrollY,
         left: rect.right + gap + window.scrollX,
       }
-    case "top":
+    case 'top':
     default:
       return {
         top: rect.top - gap + window.scrollY,
@@ -46,12 +43,7 @@ function getPosition(
   }
 }
 
-export function Tooltip({
-  content,
-  children,
-  placement = "top",
-  delay = 300,
-}: TooltipProps) {
+export function Tooltip({ content, children, placement = 'top', delay = 300 }: TooltipProps) {
   const [visible, setVisible] = React.useState(false)
   const [position, setPosition] = React.useState<TooltipPosition>({
     top: 0,
@@ -88,27 +80,27 @@ export function Tooltip({
     {
       onMouseEnter: handleMouseEnter,
       onMouseLeave: handleMouseLeave,
-    }
+    },
   )
 
   const tooltipNode =
-    mounted && typeof document !== "undefined"
+    mounted && typeof document !== 'undefined'
       ? createPortal(
           <AnimatePresence>
             {visible && (
               <motion.div
                 className={`ui-tooltip-content ui-tooltip-${placement}`}
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   top: position.top,
                   left: position.left,
                   transform:
-                    placement === "top" || placement === "bottom"
-                      ? "translateX(-50%)"
-                      : placement === "left"
-                        ? "translateX(-100%) translateY(-50%)"
-                        : "translateY(-50%)",
-                  pointerEvents: "none",
+                    placement === 'top' || placement === 'bottom'
+                      ? 'translateX(-50%)'
+                      : placement === 'left'
+                        ? 'translateX(-100%) translateY(-50%)'
+                        : 'translateY(-50%)',
+                  pointerEvents: 'none',
                   zIndex: 9999,
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -120,7 +112,7 @@ export function Tooltip({
               </motion.div>
             )}
           </AnimatePresence>,
-          document.body
+          document.body,
         )
       : null
 

@@ -1,69 +1,32 @@
-"use client"
+'use client'
 
-import { useRef, useState, useOptimistic, useTransition } from "react"
-import { useTranslations } from "next-intl"
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion"
-import { SectionHeader } from "@/components/composite/section-header"
-import { LayerReveal } from "@/components/composite/layer-reveal"
-import { projects } from "@/lib/data"
-import { simulateApiCall } from "@/lib/simulate"
-import { TrendingUpIcon, BuildingIcon, BookmarkIcon, BookmarkCheckIcon } from "@/icons"
-import { useInteractionsStore } from "@/stores"
+import { useState, useOptimistic, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LayerReveal } from '@/components/composite/layer-reveal'
+import { TiltCard3D } from '@/components/ui/tilt-card-3d'
+import { projects } from '@/lib/data'
+import { simulateApiCall } from '@/lib/simulate'
+import { TrendingUpIcon, BuildingIcon, BookmarkIcon, BookmarkCheckIcon } from '@/icons'
+import { useInteractionsStore } from '@/stores'
 
-/** Card3D — 3D mouse-tilt + primary glow on hover */
-function Card3D({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useTransform(y, [-100, 100], [5, -5])
-  const rotateY = useTransform(x, [-100, 100], [-5, 5])
-
-  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const rect = ref.current?.getBoundingClientRect()
-    if (!rect) return
-    x.set(e.clientX - rect.left - rect.width / 2)
-    y.set(e.clientY - rect.top - rect.height / 2)
-  }
-  function onMouseLeave() { x.set(0); y.set(0) }
-
-  return (
-    <div style={{ perspective: 900 }}>
-      <motion.div
-        ref={ref}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" } as any}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 280, damping: 22 }}
-        className="veil-card rounded-2xl h-full"
-      >
-        {children}
-      </motion.div>
-    </div>
-  )
-}
-
-/** BookmarkButton — Optimistic UI: fills instantly, rolls back on failure */
+/* ── Bookmark button with optimistic burst ── */
 function BookmarkButton({ projectId }: { projectId: string }) {
   const { bookmarkedIds, pendingBookmarks, toggleBookmark } = useInteractionsStore()
   const isBookmarked = bookmarkedIds.has(projectId)
   const isPending = pendingBookmarks.has(projectId)
-
-  // Local optimistic layer on top of Zustand
   const [optimistic, addOptimistic] = useOptimistic(isBookmarked, (_, v: boolean) => v)
   const [, startTransition] = useTransition()
-
-  // Burst particle state
   const [burst, setBurst] = useState(false)
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (isPending) return
-
     const next = !isBookmarked
-    if (next) { setBurst(true); setTimeout(() => setBurst(false), 600) }
-
+    if (next) {
+      setBurst(true)
+      setTimeout(() => setBurst(false), 600)
+    }
     startTransition(async () => {
       addOptimistic(next)
       await toggleBookmark(projectId, () => simulateApiCall(0.92, 900))
@@ -74,36 +37,30 @@ function BookmarkButton({ projectId }: { projectId: string }) {
     <div className="relative">
       <motion.button
         onClick={handleClick}
-        whileTap={{ scale: 0.80 }}
-        animate={optimistic
-          ? { scale: [1, 1.35, 1], rotate: [0, -12, 8, 0] }
-          : { scale: 1, rotate: 0 }
-        }
-        transition={{ duration: 0.35, ease: "easeOut" }}
-        className="relative p-1.5 rounded-lg transition-colors duration-200 cursor-pointer"
+        whileTap={{ scale: 0.78 }}
+        animate={optimistic ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="cursor-pointer rounded-lg p-2 transition-colors duration-200"
         style={{
-          color: optimistic ? "hsl(var(--primary))" : "hsl(var(--text-muted))",
-          background: optimistic ? "var(--impact-bg)" : "transparent",
+          color: optimistic ? 'hsl(var(--primary))' : 'hsl(var(--text-muted))',
+          background: optimistic ? 'rgba(0,255,218,0.08)' : 'transparent',
         }}
-        aria-label={optimistic ? "Remove bookmark" : "Bookmark project"}
-        aria-pressed={optimistic}
+        aria-label={optimistic ? 'Remove bookmark' : 'Bookmark project'}
       >
-        {optimistic
-          ? <BookmarkCheckIcon className="w-4 h-4" strokeWidth={2} />
-          : <BookmarkIcon className="w-4 h-4" strokeWidth={1.5} />
-        }
+        {optimistic ? (
+          <BookmarkCheckIcon className="h-4 w-4" />
+        ) : (
+          <BookmarkIcon className="h-4 w-4" strokeWidth={1.5} />
+        )}
       </motion.button>
-
-      {/* Burst particles on bookmark */}
       <AnimatePresence>
         {burst && (
           <motion.div
             key="burst"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
-            exit={{}}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 pointer-events-none"
+            className="pointer-events-none absolute inset-0"
           >
             {[...Array(6)].map((_, i) => (
               <motion.span
@@ -111,13 +68,13 @@ function BookmarkButton({ projectId }: { projectId: string }) {
                 initial={{ scale: 0, x: 0, y: 0, opacity: 1 }}
                 animate={{
                   scale: [0, 1, 0.5],
-                  x: Math.cos((i / 6) * Math.PI * 2) * 18,
-                  y: Math.sin((i / 6) * Math.PI * 2) * 18,
+                  x: Math.cos((i / 6) * Math.PI * 2) * 16,
+                  y: Math.sin((i / 6) * Math.PI * 2) * 16,
                   opacity: 0,
                 }}
-                transition={{ duration: 0.5, delay: i * 0.03, ease: "easeOut" }}
-                className="absolute top-1/2 left-1/2 w-1.5 h-1.5 rounded-full -translate-x-1/2 -translate-y-1/2"
-                style={{ background: "hsl(var(--primary))" }}
+                transition={{ duration: 0.45, delay: i * 0.03 }}
+                className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{ background: 'hsl(var(--primary))' }}
               />
             ))}
           </motion.div>
@@ -127,109 +84,225 @@ function BookmarkButton({ projectId }: { projectId: string }) {
   )
 }
 
-/** Bookmarks counter shown in section header */
 function BookmarkCount() {
   const { bookmarkedIds } = useInteractionsStore()
   const count = bookmarkedIds.size
   if (count === 0) return null
-
   return (
     <motion.span
       key={count}
-      initial={{ scale: 0.6, opacity: 0 }}
+      initial={{ scale: 0.7, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-      className="inline-flex items-center gap-1.5 ml-3 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold"
+      transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-xs font-semibold"
       style={{
-        background: "var(--impact-bg)",
-        border: "1px solid var(--card-border-hover)",
-        color: "hsl(var(--primary))",
+        background: 'rgba(0,255,218,0.08)',
+        border: '1px solid rgba(0,255,218,0.2)',
+        color: 'hsl(var(--primary))',
       }}
     >
-      <BookmarkCheckIcon className="w-3 h-3" />
+      <BookmarkCheckIcon className="h-3 w-3" />
       {count} saved
     </motion.span>
   )
 }
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof projects)[0]
-  index: number
-}) {
+/* ── Featured project card (full-width) ── */
+function FeaturedCard({ project }: { project: (typeof projects)[0] }) {
   return (
-    <LayerReveal delay={index * 65}>
-      <Card3D>
-        <div className="p-6 flex flex-col h-full min-h-[280px]">
-          {/* Company + bookmark row */}
-          <div className="flex items-center justify-between gap-2 mb-4">
-            <div className="flex items-center gap-2">
-              <BuildingIcon className="w-3 h-3" style={{ color: "hsl(var(--text-muted))" }} />
-              <span className="text-xs font-mono tracking-wider" style={{ color: "hsl(var(--text-muted))" }}>
-                {project.company}
-              </span>
+    <LayerReveal delay={60}>
+      <TiltCard3D intensity={6} glare shadow className="w-full rounded-2xl">
+        <div
+          className="relative overflow-hidden rounded-2xl"
+          style={{
+            background: 'hsl(var(--surface))',
+            border: '1px solid rgba(0,255,218,0.12)',
+          }}
+        >
+          {/* Top accent bar */}
+          <div
+            className="h-1 w-full"
+            style={{ background: 'linear-gradient(90deg, hsl(174,100%,50%), hsl(38,92%,58%))' }}
+          />
+
+          <div className="grid items-start gap-8 p-8 md:grid-cols-[1fr_auto]">
+            <div>
+              <div className="mb-5 flex items-center gap-3">
+                <span
+                  className="rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest"
+                  style={{
+                    background: 'rgba(0,255,218,0.08)',
+                    border: '1px solid rgba(0,255,218,0.16)',
+                    color: 'hsl(var(--primary))',
+                  }}
+                >
+                  Featured
+                </span>
+                <span
+                  className="flex items-center gap-1.5 font-mono text-xs"
+                  style={{ color: 'hsl(var(--text-muted))' }}
+                >
+                  <BuildingIcon className="h-3 w-3" />
+                  {project.company}
+                </span>
+              </div>
+
+              <h3
+                className="mb-4 text-2xl font-black leading-tight md:text-3xl"
+                style={{ color: 'hsl(var(--text-heading))' }}
+              >
+                {project.title}
+              </h3>
+              <p
+                className="mb-6 max-w-2xl text-base leading-relaxed"
+                style={{ color: 'hsl(var(--text-body))' }}
+              >
+                {project.description}
+              </p>
+
+              {project.impact && (
+                <div
+                  className="mb-6 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
+                  style={{
+                    background: 'rgba(0,255,218,0.07)',
+                    border: '1px solid rgba(0,255,218,0.14)',
+                    color: 'hsl(174,80%,62%)',
+                  }}
+                >
+                  <TrendingUpIcon className="h-3.5 w-3.5 shrink-0" />
+                  {project.impact}
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full px-3 py-1 font-mono text-xs"
+                    style={{
+                      background: 'hsl(var(--surface-2))',
+                      border: '1px solid rgba(0,255,218,0.1)',
+                      color: 'hsl(var(--text-muted))',
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
-            {/* ── Optimistic bookmark ── */}
+
+            <BookmarkButton projectId={project.title} />
+          </div>
+        </div>
+      </TiltCard3D>
+    </LayerReveal>
+  )
+}
+
+/* ── Regular project card ── */
+function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
+  return (
+    <LayerReveal delay={index * 55}>
+      <TiltCard3D intensity={10} glare shadow className="h-full rounded-2xl">
+        <div
+          className="group relative flex h-full flex-col rounded-2xl p-6"
+          style={{
+            background: 'hsl(var(--surface))',
+            border: '1px solid var(--card-border)',
+            transition: 'border-color 0.3s',
+          }}
+        >
+          {/* Hover top gradient */}
+          <div
+            className="absolute inset-x-0 top-0 h-px rounded-t-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(0,255,218,0.5), transparent)',
+            }}
+          />
+
+          <div className="mb-4 flex items-start justify-between">
+            <span
+              className="flex items-center gap-1.5 font-mono text-xs"
+              style={{ color: 'hsl(var(--text-muted))' }}
+            >
+              <BuildingIcon className="h-3 w-3" />
+              {project.company}
+            </span>
             <BookmarkButton projectId={project.title} />
           </div>
 
-          {/* Title */}
-          <h3 className="font-bold mb-3 text-base leading-snug" style={{ color: "hsl(var(--text-heading))" }}>
+          <h3
+            className="mb-3 text-base font-bold leading-snug"
+            style={{ color: 'hsl(var(--text-heading))' }}
+          >
             {project.title}
           </h3>
-
-          {/* Description */}
-          <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: "hsl(var(--text-body))" }}>
+          <p
+            className="mb-5 flex-1 text-sm leading-relaxed"
+            style={{ color: 'hsl(var(--text-body))' }}
+          >
             {project.description}
           </p>
 
-          {/* Impact badge */}
           {project.impact && (
             <div
-              className="flex items-center gap-2 mb-4 text-xs rounded-xl px-3 py-2"
+              className="mb-4 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs"
               style={{
-                background: "var(--impact-bg)",
-                border: "1px solid var(--impact-border)",
-                color: "hsl(var(--impact-text))",
+                background: 'rgba(0,255,218,0.06)',
+                border: '1px solid rgba(0,255,218,0.1)',
+                color: 'hsl(174,80%,62%)',
               }}
             >
-              <TrendingUpIcon className="w-3 h-3 shrink-0" />
-              <span>{project.impact}</span>
+              <TrendingUpIcon className="h-3 w-3 shrink-0" />
+              {project.impact}
             </div>
           )}
 
-          {/* Tech tags */}
-          <div className="flex flex-wrap gap-1.5 mt-auto">
-            {project.tech.map((tech) => (
-              <span key={tech} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs mono-tag">
-                {tech}
+          <div className="mt-auto flex flex-wrap gap-1.5">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="rounded-full px-2.5 py-0.5 font-mono text-[11px]"
+                style={{
+                  background: 'hsl(var(--surface-2))',
+                  border: '1px solid rgba(0,255,218,0.08)',
+                  color: 'hsl(var(--text-dim))',
+                }}
+              >
+                {t}
               </span>
             ))}
           </div>
         </div>
-      </Card3D>
+      </TiltCard3D>
     </LayerReveal>
   )
 }
 
 export function ProjectsSection() {
-  const t = useTranslations("projects")
+  const t = useTranslations('projects')
+  const [featured, ...rest] = projects
 
   return (
-    <section id="projects" className="py-28">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="projects" className="py-24">
+      <div className="mx-auto max-w-7xl px-8 lg:px-16">
         <LayerReveal>
-          <div className="flex items-center">
-            <SectionHeader title={t("title")} className="mb-0 mr-0" />
+          <div className="mb-14 flex flex-wrap items-center gap-4">
+            <span className="section-label">{t('title')}</span>
             <BookmarkCount />
           </div>
         </LayerReveal>
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
-          ))}
+
+        <div className="space-y-5">
+          {/* Featured */}
+          {featured && <FeaturedCard project={featured} />}
+
+          {/* Grid */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map((project, i) => (
+              <ProjectCard key={project.title} project={project} index={i + 1} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

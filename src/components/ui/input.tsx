@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -18,52 +18,62 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const generatedId = React.useId()
     const inputId = id ?? generatedId
     return (
-      <div className={cn("flex flex-col gap-1.5", wrapperClassName)}>
+      <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
         {label && (
           <label
             htmlFor={inputId}
-            className="text-xs font-mono uppercase tracking-wider select-none"
-            style={{ color: "hsl(var(--text-muted))" }}
+            className="select-none font-mono text-xs uppercase tracking-wider"
+            style={{ color: 'hsl(var(--text-muted))' }}
           >
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "hsl(var(--text-muted))" }}>
+            <span
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2"
+              style={{ color: 'hsl(var(--text-muted))' }}
+            >
               {leftIcon}
             </span>
           )}
           <input
             ref={ref}
             id={inputId}
-            className={cn("ui-input", error && "error", className)}
+            className={cn('ui-input', error && 'error', className)}
             style={{
-              paddingLeft: leftIcon ? "2.5rem" : undefined,
-              paddingRight: rightIcon ? "2.5rem" : undefined,
+              paddingLeft: leftIcon ? '2.5rem' : undefined,
+              paddingRight: rightIcon ? '2.5rem' : undefined,
             }}
             aria-invalid={!!error}
             aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
             {...props}
           />
           {rightIcon && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "hsl(var(--text-muted))" }}>
+            <span
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+              style={{ color: 'hsl(var(--text-muted))' }}
+            >
               {rightIcon}
             </span>
           )}
         </div>
         {error && (
-          <p id={`${inputId}-error`} className="text-xs" style={{ color: "hsl(var(--destructive))" }}>
+          <p
+            id={`${inputId}-error`}
+            className="text-xs"
+            style={{ color: 'hsl(var(--destructive))' }}
+          >
             {error}
           </p>
         )}
         {!error && hint && (
-          <p id={`${inputId}-hint`} className="text-xs" style={{ color: "hsl(var(--text-dim))" }}>
+          <p id={`${inputId}-hint`} className="text-xs" style={{ color: 'hsl(var(--text-dim))' }}>
             {hint}
           </p>
         )}
       </div>
     )
-  }
+  },
 )
-Input.displayName = "Input"
+Input.displayName = 'Input'

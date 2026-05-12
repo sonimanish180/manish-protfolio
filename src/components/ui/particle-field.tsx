@@ -1,11 +1,15 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 interface Particle {
-  x: number; y: number; z: number
-  vx: number; vy: number; vz: number
+  x: number
+  y: number
+  z: number
+  vx: number
+  vy: number
+  vz: number
   size: number
 }
 
@@ -22,11 +26,9 @@ export interface ParticleFieldProps {
 }
 
 function readPrimary(): string {
-  if (typeof document === "undefined") return "174,100%,50%"
-  const v = getComputedStyle(document.documentElement)
-    .getPropertyValue("--primary")
-    .trim()
-  return v ? v.replace(/ /g, ",") : "174,100%,50%"
+  if (typeof document === 'undefined') return '174,100%,50%'
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
+  return v ? v.replace(/ /g, ',') : '174,100%,50%'
 }
 
 export function ParticleField({
@@ -37,49 +39,51 @@ export function ParticleField({
   className,
 }: ParticleFieldProps) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
-  const frameRef  = React.useRef<number>(0)
-  const mouseRef  = React.useRef({ x: 0, y: 0 })
-  const partsRef  = React.useRef<Particle[]>([])
-  const colorRef  = React.useRef(readPrimary())
+  const frameRef = React.useRef<number>(0)
+  const mouseRef = React.useRef({ x: 0, y: 0 })
+  const partsRef = React.useRef<Particle[]>([])
+  const colorRef = React.useRef(readPrimary())
 
   React.useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext('2d')
     if (!ctx) return
 
     function resize() {
       if (!canvas) return
-      canvas.width  = canvas.offsetWidth
+      canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
     }
 
     partsRef.current = Array.from({ length: count }, () => ({
-      x:  (Math.random() - 0.5) * 2,
-      y:  (Math.random() - 0.5) * 2,
-      z:  Math.random(),
+      x: (Math.random() - 0.5) * 2,
+      y: (Math.random() - 0.5) * 2,
+      z: Math.random(),
       vx: (Math.random() - 0.5) * 0.0018 * speed,
       vy: (Math.random() - 0.5) * 0.0018 * speed,
-      vz: (Math.random() - 0.5) * 0.001  * speed,
+      vz: (Math.random() - 0.5) * 0.001 * speed,
       size: Math.random() * 1.8 + 0.4,
     }))
 
     function project(x: number, y: number, z: number, w: number, h: number) {
       const fov = 1.4
-      const pz  = z + 1.6
+      const pz = z + 1.6
       const scale = fov / pz
       const dim = Math.min(w, h)
       return {
-        sx:     x * scale * dim / 2 + w / 2,
-        sy:     y * scale * dim / 2 + h / 2,
-        alpha:  Math.min(1, (z + 0.8) / 1.4),
+        sx: (x * scale * dim) / 2 + w / 2,
+        sy: (y * scale * dim) / 2 + h / 2,
+        alpha: Math.min(1, (z + 0.8) / 1.4),
         radius: Math.max(0.3, scale * 2.8),
       }
     }
 
     // Reread color when theme changes (observe html attribute)
-    const mo = new MutationObserver(() => { colorRef.current = readPrimary() })
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-style"] })
+    const mo = new MutationObserver(() => {
+      colorRef.current = readPrimary()
+    })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-style'] })
 
     function draw() {
       if (!canvas || !ctx) return
@@ -102,12 +106,18 @@ export function ParticleField({
 
       // Move + wrap
       for (const p of parts) {
-        p.x += p.vx; p.y += p.vy; p.z += p.vz
+        p.x += p.vx
+        p.y += p.vy
+        p.z += p.vz
         // Dampen velocity slightly so mouse nudge doesn't explode
-        p.vx *= 0.998; p.vy *= 0.998
-        if (p.x >  1) p.x = -1;  if (p.x < -1) p.x =  1
-        if (p.y >  1) p.y = -1;  if (p.y < -1) p.y =  1
-        if (p.z >  1) p.z =  0;  if (p.z <  0) p.z =  1
+        p.vx *= 0.998
+        p.vy *= 0.998
+        if (p.x > 1) p.x = -1
+        if (p.x < -1) p.x = 1
+        if (p.y > 1) p.y = -1
+        if (p.y < -1) p.y = 1
+        if (p.z > 1) p.z = 0
+        if (p.z < 0) p.z = 1
       }
 
       // Sort back→front for proper alpha layering
@@ -119,16 +129,18 @@ export function ParticleField({
         const pa = project(a.x, a.y, a.z, w, h)
         for (let j = i + 1; j < sorted.length; j++) {
           const b = sorted[j]
-          const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z
-          const dist = Math.sqrt(dx*dx + dy*dy + dz*dz)
+          const dx = a.x - b.x,
+            dy = a.y - b.y,
+            dz = a.z - b.z
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz)
           if (dist > linkDistance) continue
-          const pb  = project(b.x, b.y, b.z, w, h)
+          const pb = project(b.x, b.y, b.z, w, h)
           const alpha = (1 - dist / linkDistance) * 0.18
           ctx.beginPath()
           ctx.moveTo(pa.sx, pa.sy)
           ctx.lineTo(pb.sx, pb.sy)
           ctx.strokeStyle = `hsla(${c},${alpha})`
-          ctx.lineWidth   = 0.6
+          ctx.lineWidth = 0.6
           ctx.stroke()
         }
       }
@@ -155,25 +167,25 @@ export function ParticleField({
       if (!canvas) return
       const r = canvas.getBoundingClientRect()
       mouseRef.current = {
-        x: ((e.clientX - r.left) / r.width)  * 2 - 1,
-        y: ((e.clientY - r.top)  / r.height) * 2 - 1,
+        x: ((e.clientX - r.left) / r.width) * 2 - 1,
+        y: ((e.clientY - r.top) / r.height) * 2 - 1,
       }
     }
-    if (interactive) canvas.addEventListener("mousemove", onMouse)
+    if (interactive) canvas.addEventListener('mousemove', onMouse)
 
     return () => {
       cancelAnimationFrame(frameRef.current)
       ro.disconnect()
       mo.disconnect()
-      if (interactive) canvas?.removeEventListener("mousemove", onMouse)
+      if (interactive) canvas?.removeEventListener('mousemove', onMouse)
     }
   }, [count, speed, linkDistance, interactive])
 
   return (
     <canvas
       ref={canvasRef}
-      className={cn("block", className)}
-      style={{ width: "100%", height: "100%" }}
+      className={cn('block', className)}
+      style={{ width: '100%', height: '100%' }}
     />
   )
 }

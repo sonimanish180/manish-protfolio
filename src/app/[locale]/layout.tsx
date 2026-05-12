@@ -1,7 +1,7 @@
-import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
-import { notFound } from "next/navigation"
-import { routing } from "@/i18n/routing"
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { routing } from '@/i18n/routing'
 
 export default async function LocaleLayout({
   children,
@@ -12,15 +12,11 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
 
-  if (!routing.locales.includes(locale as "en")) {
+  if (!routing.locales.includes(locale as 'en')) {
     notFound()
   }
 
   const messages = await getMessages()
 
-  return (
-    <NextIntlClientProvider messages={messages}>
-      {children}
-    </NextIntlClientProvider>
-  )
+  return <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
 }

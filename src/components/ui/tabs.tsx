@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import * as React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export interface TabItem {
   key: string
@@ -16,16 +16,10 @@ export interface TabsProps {
   activeKey: string
   onChange: (key: string) => void
   children?: React.ReactNode
-  variant?: "underline" | "pill" | "card"
+  variant?: 'underline' | 'pill' | 'card'
 }
 
-export function Tabs({
-  tabs,
-  activeKey,
-  onChange,
-  children,
-  variant = "underline",
-}: TabsProps) {
+export function Tabs({ tabs, activeKey, onChange, children, variant = 'underline' }: TabsProps) {
   return (
     <div className={`ui-tabs ui-tabs--${variant}`}>
       <div className="ui-tabs-list" role="tablist">
@@ -38,28 +32,26 @@ export function Tabs({
               aria-selected={isActive}
               aria-disabled={tab.disabled}
               disabled={tab.disabled}
-              className={`ui-tab${isActive ? " active" : ""}${tab.disabled ? " disabled" : ""}`}
+              className={`ui-tab${isActive ? 'active' : ''}${tab.disabled ? 'disabled' : ''}`}
               onClick={() => !tab.disabled && onChange(tab.key)}
             >
-              {variant === "underline" && isActive && (
+              {variant === 'underline' && isActive && (
                 <motion.span
                   className="ui-tab-indicator"
                   layoutId="tab-indicator"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
                 />
               )}
-              {variant === "pill" && isActive && (
+              {variant === 'pill' && isActive && (
                 <motion.span
                   className="ui-tab-pill"
                   layoutId="tab-pill"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
                 />
               )}
               {tab.icon && <span className="ui-tab-icon">{tab.icon}</span>}
               <span className="ui-tab-label">{tab.label}</span>
-              {tab.badge && (
-                <span className="ui-tab-badge">{tab.badge}</span>
-              )}
+              {tab.badge && <span className="ui-tab-badge">{tab.badge}</span>}
             </button>
           )
         })}

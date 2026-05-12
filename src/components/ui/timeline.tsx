@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 export interface TimelineEvent {
   id: string
@@ -6,7 +6,7 @@ export interface TimelineEvent {
   description?: string
   date: string
   icon?: React.ReactNode
-  variant?: "default" | "success" | "warning" | "error" | "info"
+  variant?: 'default' | 'success' | 'warning' | 'error' | 'info'
 }
 
 export interface TimelineProps {
@@ -17,20 +17,13 @@ export function Timeline({ events }: TimelineProps) {
   return (
     <div className="ui-timeline">
       {events.map((event, index) => {
-        const variant = event.variant ?? "default"
+        const variant = event.variant ?? 'default'
         const isLast = index === events.length - 1
         return (
-          <div
-            key={event.id}
-            className={`ui-timeline-item ui-timeline-item-${variant}`}
-          >
+          <div key={event.id} className={`ui-timeline-item ui-timeline-item-${variant}`}>
             <div className="ui-timeline-track">
-              <div
-                className={`ui-timeline-dot ui-timeline-dot-${variant}`}
-              >
-                {event.icon && (
-                  <span className="ui-timeline-dot-icon">{event.icon}</span>
-                )}
+              <div className={`ui-timeline-dot ui-timeline-dot-${variant}`}>
+                {event.icon && <span className="ui-timeline-dot-icon">{event.icon}</span>}
               </div>
               {!isLast && <div className="ui-timeline-line" />}
             </div>
@@ -39,11 +32,7 @@ export function Timeline({ events }: TimelineProps) {
                 <span className="ui-timeline-title">{event.title}</span>
                 <span className="ui-timeline-date">{event.date}</span>
               </div>
-              {event.description && (
-                <p className="ui-timeline-description">
-                  {event.description}
-                </p>
-              )}
+              {event.description && <p className="ui-timeline-description">{event.description}</p>}
             </div>
           </div>
         )

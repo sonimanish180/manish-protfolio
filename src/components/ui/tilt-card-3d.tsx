@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 export interface TiltCard3DProps {
   children: React.ReactNode
@@ -38,41 +38,39 @@ export function TiltCard3D({
 
   // Glare and shadow as plain state, updated in the mouse handler
   const [glareGradient, setGlareGradient] = React.useState(
-    "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.00) 0%, transparent 65%)"
+    'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.00) 0%, transparent 65%)',
   )
   const [boxShadow, setBoxShadow] = React.useState(
-    "0px 0px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)"
+    '0px 0px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)',
   )
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!ref.current) return
     const { left, top, width, height } = ref.current.getBoundingClientRect()
-    const nx = (e.clientX - left) / width - 0.5   // -0.5 … 0.5
-    const ny = (e.clientY - top)  / height - 0.5
+    const nx = (e.clientX - left) / width - 0.5 // -0.5 … 0.5
+    const ny = (e.clientY - top) / height - 0.5
 
     rawX.set(nx)
     rawY.set(ny)
 
-    const gx = (nx + 0.5) * 100   // 0 … 100 %
+    const gx = (nx + 0.5) * 100 // 0 … 100 %
     const gy = (ny + 0.5) * 100
     setGlareGradient(
-      `radial-gradient(circle at ${gx.toFixed(1)}% ${gy.toFixed(1)}%, rgba(255,255,255,0.18) 0%, transparent 65%)`
+      `radial-gradient(circle at ${gx.toFixed(1)}% ${gy.toFixed(1)}%, rgba(255,255,255,0.18) 0%, transparent 65%)`,
     )
 
     const sx = (-nx * 24).toFixed(1)
     const sy = (-ny * 16).toFixed(1)
-    setBoxShadow(
-      `${sx}px ${sy}px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)`
-    )
+    setBoxShadow(`${sx}px ${sy}px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)`)
   }
 
   function onMouseLeave() {
     rawX.set(0)
     rawY.set(0)
     setGlareGradient(
-      "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.00) 0%, transparent 65%)"
+      'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.00) 0%, transparent 65%)',
     )
-    setBoxShadow("0px 0px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)")
+    setBoxShadow('0px 0px 40px rgba(0,0,0,0.40), 0 0 0 1px var(--card-border)')
   }
 
   return (
@@ -80,19 +78,19 @@ export function TiltCard3D({
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ perspective: "900px" }}
-      className={cn("relative", className)}
+      style={{ perspective: '900px' }}
+      className={cn('relative', className)}
     >
       <motion.div
         style={{
           rotateX,
           rotateY,
-          transformStyle: "preserve-3d",
+          transformStyle: 'preserve-3d',
           boxShadow: shadow ? boxShadow : undefined,
         }}
         whileHover={{ scale }}
-        transition={{ scale: { type: "spring", stiffness: 300, damping: 26 } }}
-        className="relative w-full h-full rounded-[inherit]"
+        transition={{ scale: { type: 'spring', stiffness: 300, damping: 26 } }}
+        className="relative h-full w-full rounded-[inherit]"
       >
         {children}
 
@@ -101,17 +99,17 @@ export function TiltCard3D({
           <div
             aria-hidden
             style={{ background: glareGradient }}
-            className="absolute inset-0 rounded-[inherit] pointer-events-none z-10 mix-blend-screen transition-[background] duration-75"
+            className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] mix-blend-screen transition-[background] duration-75"
           />
         )}
 
         {/* Edge depth gradient */}
         <div
           aria-hidden
-          className="absolute inset-0 rounded-[inherit] pointer-events-none z-[9]"
+          className="pointer-events-none absolute inset-0 z-[9] rounded-[inherit]"
           style={{
             background:
-              "linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 45%,rgba(0,0,0,0.06) 100%)",
+              'linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 45%,rgba(0,0,0,0.06) 100%)',
           }}
         />
       </motion.div>

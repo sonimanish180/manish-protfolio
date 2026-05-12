@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 /**
  * CursorGlow — Scroll Theater pattern.
@@ -6,8 +6,8 @@
  * Render once at page root — not inside individual sections.
  */
 
-import { useEffect } from "react"
-import { motion, useMotionValue, useSpring } from "framer-motion"
+import { useEffect } from 'react'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 export function CursorGlow() {
   const mouseX = useMotionValue(-300)
@@ -22,24 +22,28 @@ export function CursorGlow() {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
     }
-    window.addEventListener("mousemove", move)
-    return () => window.removeEventListener("mousemove", move)
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
   }, [mouseX, mouseY])
 
   return (
     <motion.div
       className="pointer-events-none fixed z-0 hidden md:block"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      style={{
-        x: springX,
-        y: springY,
-        translateX: "-50%",
-        translateY: "-50%",
-        width: 480,
-        height: 480,
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(0,255,218,0.055) 0%, transparent 68%)",
-      } as any}
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      style={
+        {
+          // framer-motion MotionValues (x/y) are not in React.CSSProperties — cast is intentional
+          x: springX,
+          y: springY,
+          translateX: '-50%',
+          translateY: '-50%',
+          width: 480,
+          height: 480,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(0,255,218,0.055) 0%, transparent 68%)',
+        } as any
+      }
+      /* eslint-enable @typescript-eslint/no-explicit-any */
     />
   )
 }

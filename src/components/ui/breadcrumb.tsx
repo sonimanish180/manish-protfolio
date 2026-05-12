@@ -1,6 +1,6 @@
-import * as React from "react"
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
+import * as React from 'react'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 
 export interface BreadcrumbItem {
   label: string
@@ -13,10 +13,7 @@ export interface BreadcrumbProps {
   separator?: React.ReactNode
 }
 
-export function Breadcrumb({
-  items,
-  separator = <ChevronRight size={14} />,
-}: BreadcrumbProps) {
+export function Breadcrumb({ items, separator = <ChevronRight size={14} /> }: BreadcrumbProps) {
   return (
     <nav className="ui-breadcrumb" aria-label="Breadcrumb">
       <ol className="ui-breadcrumb-list">
@@ -25,12 +22,10 @@ export function Breadcrumb({
           return (
             <React.Fragment key={index}>
               <li
-                className={`ui-breadcrumb-item${isLast ? " current" : ""}`}
-                aria-current={isLast ? "page" : undefined}
+                className={`ui-breadcrumb-item${isLast ? 'current' : ''}`}
+                aria-current={isLast ? 'page' : undefined}
               >
-                {item.icon && (
-                  <span className="ui-breadcrumb-icon">{item.icon}</span>
-                )}
+                {item.icon && <span className="ui-breadcrumb-icon">{item.icon}</span>}
                 {!isLast && item.href ? (
                   <Link href={item.href} className="ui-breadcrumb-link">
                     {item.label}

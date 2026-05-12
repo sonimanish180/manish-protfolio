@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { createPortal } from "react-dom"
-import { XIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { createPortal } from 'react-dom'
+import { XIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export interface DialogProps {
   open: boolean
@@ -25,7 +25,7 @@ export function Dialog({
   title,
   description,
   hideClose = false,
-  maxWidth = "max-w-lg",
+  maxWidth = 'max-w-lg',
   children,
   className,
 }: DialogProps) {
@@ -35,15 +35,19 @@ export function Dialog({
   // Close on Escape
   React.useEffect(() => {
     if (!open) return
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
-    document.addEventListener("keydown", handler)
-    return () => document.removeEventListener("keydown", handler)
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
   }, [open, onClose])
 
   // Lock scroll
   React.useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : ""
-    return () => { document.body.style.overflow = "" }
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [open])
 
   if (!mounted) return null
@@ -57,7 +61,9 @@ export function Dialog({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18 }}
-          onClick={(e: React.MouseEvent) => { if (e.target === e.currentTarget) onClose() }}
+          onClick={(e: React.MouseEvent) => {
+            if (e.target === e.currentTarget) onClose()
+          }}
           aria-modal="true"
           role="dialog"
         >
@@ -65,20 +71,26 @@ export function Dialog({
             initial={{ opacity: 0, scale: 0.94, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 12 }}
-            transition={{ type: "spring", stiffness: 400, damping: 28 }}
-            className={cn("ui-dialog w-full", maxWidth, className)}
+            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+            className={cn('ui-dialog w-full', maxWidth, className)}
           >
             {/* Header */}
             {(title || !hideClose) && (
               <div className="flex items-start justify-between gap-4 p-6 pb-4">
                 <div>
                   {title && (
-                    <h2 className="text-base font-bold leading-tight" style={{ color: "hsl(var(--text-heading))" }}>
+                    <h2
+                      className="text-base font-bold leading-tight"
+                      style={{ color: 'hsl(var(--text-heading))' }}
+                    >
                       {title}
                     </h2>
                   )}
                   {description && (
-                    <p className="text-sm mt-1 leading-relaxed" style={{ color: "hsl(var(--text-body))" }}>
+                    <p
+                      className="mt-1 text-sm leading-relaxed"
+                      style={{ color: 'hsl(var(--text-body))' }}
+                    >
                       {description}
                     </p>
                   )}
@@ -86,36 +98,42 @@ export function Dialog({
                 {!hideClose && (
                   <button
                     onClick={onClose}
-                    className="shrink-0 p-1.5 rounded-lg cursor-pointer transition-colors"
-                    style={{ color: "hsl(var(--text-muted))" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "hsl(var(--surface-2))")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                    className="shrink-0 cursor-pointer rounded-lg p-1.5 transition-colors"
+                    style={{ color: 'hsl(var(--text-muted))' }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = 'hsl(var(--surface-2))')
+                    }
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                     aria-label="Close dialog"
                   >
-                    <XIcon className="w-4 h-4" />
+                    <XIcon className="h-4 w-4" />
                   </button>
                 )}
               </div>
             )}
 
             {/* Body */}
-            <div className={cn(!title && !hideClose ? "p-6" : "px-6 pb-6")}>
-              {children}
-            </div>
+            <div className={cn(!title && !hideClose ? 'p-6' : 'px-6 pb-6')}>{children}</div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   )
 }
 
 /** Convenience footer row for dialog action buttons */
-export function DialogFooter({ children, className }: { children: React.ReactNode; className?: string }) {
+export function DialogFooter({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <div
-      className={cn("flex items-center justify-end gap-2.5 pt-4 mt-4", className)}
-      style={{ borderTop: "1px solid var(--card-border)" }}
+      className={cn('mt-4 flex items-center justify-end gap-2.5 pt-4', className)}
+      style={{ borderTop: '1px solid var(--card-border)' }}
     >
       {children}
     </div>

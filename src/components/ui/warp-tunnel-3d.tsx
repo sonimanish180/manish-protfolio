@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface WarpTunnel3DProps {
   speed?: number
@@ -21,28 +21,32 @@ export function WarpTunnel3D({
   const canvasRef = React.useRef<HTMLCanvasElement>(null)
   const frameRef = React.useRef(0)
   const zRef = React.useRef(0)
-  const colorRef = React.useRef("174,100%,50%")
-  const bgRef = React.useRef("217,50%,4%")
+  const colorRef = React.useRef('174,100%,50%')
+  const bgRef = React.useRef('217,50%,4%')
 
   React.useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext('2d')
     if (!ctx) return
 
     function readColors() {
-      if (typeof document === "undefined") return
+      if (typeof document === 'undefined') return
       colorRef.current =
         getComputedStyle(document.documentElement)
-          .getPropertyValue("--primary").trim().replace(/ /g, ",") || "174,100%,50%"
+          .getPropertyValue('--primary')
+          .trim()
+          .replace(/ /g, ',') || '174,100%,50%'
       bgRef.current =
         getComputedStyle(document.documentElement)
-          .getPropertyValue("--background").trim().replace(/ /g, ",") || "217,50%,4%"
+          .getPropertyValue('--background')
+          .trim()
+          .replace(/ /g, ',') || '217,50%,4%'
     }
     readColors()
 
     const mo = new MutationObserver(readColors)
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-style"] })
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-style'] })
 
     function resize() {
       if (!canvas) return
@@ -68,11 +72,11 @@ export function WarpTunnel3D({
       const segment = 400 / rings
 
       for (let i = rings; i >= 0; i--) {
-        const z = ((i * segment) + zRef.current) % 400
+        const z = (i * segment + zRef.current) % 400
         const t = z / 400 // 0 = far, 1 = close
         const persp = 1 + t * 3.2
-        const rx = (w * 0.44) * persp
-        const ry = (h * 0.42) * persp
+        const rx = w * 0.44 * persp
+        const ry = h * 0.42 * persp
         if (rx > w * 2) continue
 
         const alpha = t * 0.55
@@ -105,19 +109,26 @@ export function WarpTunnel3D({
       }
 
       // Center burst glow
-      const r = Math.min(w, h) * 0.10
+      const r = Math.min(w, h) * 0.1
       const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
-      grd.addColorStop(0,   `hsla(${c},0.95)`)
-      grd.addColorStop(0.35,`hsla(${c},0.30)`)
-      grd.addColorStop(1,   "transparent")
+      grd.addColorStop(0, `hsla(${c},0.95)`)
+      grd.addColorStop(0.35, `hsla(${c},0.30)`)
+      grd.addColorStop(1, 'transparent')
       ctx.fillStyle = grd
       ctx.beginPath()
       ctx.arc(cx, cy, r, 0, Math.PI * 2)
       ctx.fill()
 
       // Outer vignette to sell depth
-      const vig = ctx.createRadialGradient(cx, cy, Math.min(w,h)*0.3, cx, cy, Math.min(w,h)*0.72)
-      vig.addColorStop(0, "transparent")
+      const vig = ctx.createRadialGradient(
+        cx,
+        cy,
+        Math.min(w, h) * 0.3,
+        cx,
+        cy,
+        Math.min(w, h) * 0.72,
+      )
+      vig.addColorStop(0, 'transparent')
       vig.addColorStop(1, `hsla(${bgRef.current},0.82)`)
       ctx.fillStyle = vig
       ctx.fillRect(0, 0, w, h)
@@ -137,8 +148,8 @@ export function WarpTunnel3D({
   return (
     <canvas
       ref={canvasRef}
-      className={cn("block", className)}
-      style={{ width: "100%", height: "100%" }}
+      className={cn('block', className)}
+      style={{ width: '100%', height: '100%' }}
     />
   )
 }

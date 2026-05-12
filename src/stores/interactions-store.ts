@@ -2,7 +2,7 @@
  * interactions-store — Optimistic UI state for bookmarks and endorsements.
  * Uses Zustand with optimistic updates + rollback on simulated failure.
  */
-import { create } from "zustand"
+import { create } from 'zustand'
 
 interface InteractionsState {
   /** Project IDs the user has bookmarked */
@@ -34,7 +34,11 @@ export const useInteractionsStore = create<InteractionsState>((set, get) => ({
     // Optimistic: toggle immediately + mark pending
     set((s) => {
       const next = new Set(s.bookmarkedIds)
-      wasBookmarked ? next.delete(id) : next.add(id)
+      if (wasBookmarked) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
       return {
         bookmarkedIds: next,
         pendingBookmarks: new Set(s.pendingBookmarks).add(id),
@@ -47,7 +51,11 @@ export const useInteractionsStore = create<InteractionsState>((set, get) => ({
       // Rollback to previous state
       set((s) => {
         const rolled = new Set(s.bookmarkedIds)
-        wasBookmarked ? rolled.add(id) : rolled.delete(id)
+        if (wasBookmarked) {
+          rolled.add(id)
+        } else {
+          rolled.delete(id)
+        }
         return { bookmarkedIds: rolled }
       })
     } finally {
@@ -61,7 +69,7 @@ export const useInteractionsStore = create<InteractionsState>((set, get) => ({
 
   endorseSkill: async (skill, apiCall) => {
     const { endorsedSkills } = get()
-    if (endorsedSkills.has(skill)) return   // already endorsed, no double-tap
+    if (endorsedSkills.has(skill)) return // already endorsed, no double-tap
 
     // Optimistic: +1 count + mark as endorsed + mark pending
     set((s) => ({
@@ -78,7 +86,10 @@ export const useInteractionsStore = create<InteractionsState>((set, get) => ({
         const endorsed = new Set(s.endorsedSkills)
         endorsed.delete(skill)
         return {
-          endorsements: { ...s.endorsements, [skill]: Math.max(0, (s.endorsements[skill] ?? 1) - 1) },
+          endorsements: {
+            ...s.endorsements,
+            [skill]: Math.max(0, (s.endorsements[skill] ?? 1) - 1),
+          },
           endorsedSkills: endorsed,
         }
       })

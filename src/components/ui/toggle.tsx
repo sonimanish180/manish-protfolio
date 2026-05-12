@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 export interface ToggleProps {
   checked: boolean
   onChange: (checked: boolean) => void
-  size?: "sm" | "md" | "lg"
+  size?: 'sm' | 'md' | 'lg'
   label?: string
   description?: string
   disabled?: boolean
@@ -16,15 +16,15 @@ export interface ToggleProps {
 
 // Track width, track height, thumb diameter, left offset when unchecked
 const SIZE_MAP = {
-  sm: { w: 32, h: 18,  thumb: 12, pad: 3 },
-  md: { w: 40, h: 22,  thumb: 15, pad: 3 },
-  lg: { w: 50, h: 27,  thumb: 19, pad: 4 },
+  sm: { w: 32, h: 18, thumb: 12, pad: 3 },
+  md: { w: 40, h: 22, thumb: 15, pad: 3 },
+  lg: { w: 50, h: 27, thumb: 19, pad: 4 },
 } as const
 
 export function Toggle({
   checked,
   onChange,
-  size = "md",
+  size = 'md',
   label,
   description,
   disabled,
@@ -40,9 +40,9 @@ export function Toggle({
     <label
       htmlFor={id}
       className={cn(
-        "inline-flex items-center gap-3 cursor-pointer select-none",
-        disabled && "opacity-40 cursor-not-allowed pointer-events-none",
-        className
+        'inline-flex cursor-pointer select-none items-center gap-3',
+        disabled && 'pointer-events-none cursor-not-allowed opacity-40',
+        className,
       )}
     >
       {/* Hidden real checkbox for a11y */}
@@ -59,36 +59,36 @@ export function Toggle({
       <span
         aria-hidden="true"
         style={{
-          position: "relative",
-          display: "inline-flex",
-          alignItems: "center",
+          position: 'relative',
+          display: 'inline-flex',
+          alignItems: 'center',
           width: w,
           height: h,
           borderRadius: 9999,
           flexShrink: 0,
-          border: "1.5px solid",
-          borderColor: checked ? "hsl(var(--primary))" : "hsl(var(--text-dim))",
-          background: checked ? "hsl(var(--primary))" : "hsl(var(--surface-2))",
-          transition: "background 0.18s, border-color 0.18s",
-          cursor: disabled ? "not-allowed" : "pointer",
+          border: '1.5px solid',
+          borderColor: checked ? 'hsl(var(--primary))' : 'hsl(var(--text-dim))',
+          background: checked ? 'hsl(var(--primary))' : 'hsl(var(--surface-2))',
+          transition: 'background 0.18s, border-color 0.18s',
+          cursor: disabled ? 'not-allowed' : 'pointer',
         }}
       >
         {/* Animated thumb */}
         <motion.span
           aria-hidden="true"
           animate={{ x: checked ? travel : 0 }}
-          transition={{ type: "spring", stiffness: 520, damping: 32 }}
+          transition={{ type: 'spring', stiffness: 520, damping: 32 }}
           style={{
-            position: "absolute",
+            position: 'absolute',
             left: pad,
-            top: "50%",
-            translateY: "-50%",
+            top: '50%',
+            translateY: '-50%',
             width: thumb,
             height: thumb,
-            borderRadius: "50%",
-            background: "#fff",
-            boxShadow: "0 1px 5px rgba(0,0,0,0.32)",
-            display: "block",
+            borderRadius: '50%',
+            background: '#fff',
+            boxShadow: '0 1px 5px rgba(0,0,0,0.32)',
+            display: 'block',
           }}
         />
       </span>
@@ -99,16 +99,13 @@ export function Toggle({
           {label && (
             <span
               className="text-sm font-medium leading-tight"
-              style={{ color: "hsl(var(--text-heading))" }}
+              style={{ color: 'hsl(var(--text-heading))' }}
             >
               {label}
             </span>
           )}
           {description && (
-            <span
-              className="text-xs leading-snug"
-              style={{ color: "hsl(var(--text-muted))" }}
-            >
+            <span className="text-xs leading-snug" style={{ color: 'hsl(var(--text-muted))' }}>
               {description}
             </span>
           )}

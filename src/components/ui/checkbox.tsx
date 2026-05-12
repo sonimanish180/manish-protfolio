@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -14,12 +14,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const generatedId = React.useId()
     const checkId = id ?? generatedId
     return (
-      <div className={cn("flex items-start gap-2.5", wrapperClassName)}>
+      <div className={cn('flex items-start gap-2.5', wrapperClassName)}>
         <input
           ref={ref}
           type="checkbox"
           id={checkId}
-          className={cn("ui-checkbox mt-0.5", className)}
+          className={cn('ui-checkbox mt-0.5', className)}
           {...props}
         />
         {(label || description) && (
@@ -27,14 +27,14 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             {label && (
               <label
                 htmlFor={checkId}
-                className="text-sm font-medium cursor-pointer select-none leading-tight"
-                style={{ color: "hsl(var(--text-heading))" }}
+                className="cursor-pointer select-none text-sm font-medium leading-tight"
+                style={{ color: 'hsl(var(--text-heading))' }}
               >
                 {label}
               </label>
             )}
             {description && (
-              <span className="text-xs leading-relaxed" style={{ color: "hsl(var(--text-muted))" }}>
+              <span className="text-xs leading-relaxed" style={{ color: 'hsl(var(--text-muted))' }}>
                 {description}
               </span>
             )}
@@ -42,6 +42,6 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </div>
     )
-  }
+  },
 )
-Checkbox.displayName = "Checkbox"
+Checkbox.displayName = 'Checkbox'

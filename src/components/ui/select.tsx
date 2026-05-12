@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { ChevronDownIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from 'react'
+import { ChevronDownIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export interface SelectOption {
   value: string
@@ -20,16 +20,19 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 }
 
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ label, hint, error, options, placeholder, className, wrapperClassName, id, ...props }, ref) => {
+  (
+    { label, hint, error, options, placeholder, className, wrapperClassName, id, ...props },
+    ref,
+  ) => {
     const generatedId = React.useId()
     const selectId = id ?? generatedId
     return (
-      <div className={cn("flex flex-col gap-1.5", wrapperClassName)}>
+      <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
         {label && (
           <label
             htmlFor={selectId}
-            className="text-xs font-mono uppercase tracking-wider select-none"
-            style={{ color: "hsl(var(--text-muted))" }}
+            className="select-none font-mono text-xs uppercase tracking-wider"
+            style={{ color: 'hsl(var(--text-muted))' }}
           >
             {label}
           </label>
@@ -38,7 +41,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           <select
             ref={ref}
             id={selectId}
-            className={cn("ui-select", error && "error", className)}
+            className={cn('ui-select', error && 'error', className)}
             aria-invalid={!!error}
             {...props}
           >
@@ -54,22 +57,22 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           <ChevronDownIcon
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
-            style={{ color: "hsl(var(--text-muted))" }}
+            className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2"
+            style={{ color: 'hsl(var(--text-muted))' }}
           />
         </div>
         {error && (
-          <p className="text-xs" style={{ color: "hsl(var(--destructive))" }}>
+          <p className="text-xs" style={{ color: 'hsl(var(--destructive))' }}>
             {error}
           </p>
         )}
         {!error && hint && (
-          <p className="text-xs" style={{ color: "hsl(var(--text-dim))" }}>
+          <p className="text-xs" style={{ color: 'hsl(var(--text-dim))' }}>
             {hint}
           </p>
         )}
       </div>
     )
-  }
+  },
 )
-Select.displayName = "Select"
+Select.displayName = 'Select'

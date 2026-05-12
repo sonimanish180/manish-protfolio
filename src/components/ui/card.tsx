@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 export interface CardProps {
   title?: string
@@ -8,7 +8,7 @@ export interface CardProps {
   children?: React.ReactNode
   className?: string
   hover?: boolean
-  padding?: "none" | "sm" | "md" | "lg"
+  padding?: 'none' | 'sm' | 'md' | 'lg'
 }
 
 export function Card({
@@ -19,25 +19,21 @@ export function Card({
   children,
   className,
   hover,
-  padding = "md",
+  padding = 'md',
 }: CardProps) {
   const hasHeader = title || description || headerAction
 
   return (
     <div
-      className={`ui-card ui-card--padding-${padding}${hover ? " ui-card--hover" : ""}${className ? ` ${className}` : ""}`}
+      className={`ui-card ui-card--padding-${padding}${hover ? 'ui-card--hover' : ''}${className ? ` ${className}` : ''}`}
     >
       {hasHeader && (
         <CardHeader>
           <div className="ui-card-header-text">
             {title && <h3 className="ui-card-title">{title}</h3>}
-            {description && (
-              <p className="ui-card-description">{description}</p>
-            )}
+            {description && <p className="ui-card-description">{description}</p>}
           </div>
-          {headerAction && (
-            <div className="ui-card-header-action">{headerAction}</div>
-          )}
+          {headerAction && <div className="ui-card-header-action">{headerAction}</div>}
         </CardHeader>
       )}
       {children && <CardBody>{children}</CardBody>}
@@ -53,11 +49,7 @@ export function CardHeader({
   children?: React.ReactNode
   className?: string
 }) {
-  return (
-    <div className={`ui-card-header${className ? ` ${className}` : ""}`}>
-      {children}
-    </div>
-  )
+  return <div className={`ui-card-header${className ? ` ${className}` : ''}`}>{children}</div>
 }
 
 export function CardBody({
@@ -67,11 +59,7 @@ export function CardBody({
   children?: React.ReactNode
   className?: string
 }) {
-  return (
-    <div className={`ui-card-body${className ? ` ${className}` : ""}`}>
-      {children}
-    </div>
-  )
+  return <div className={`ui-card-body${className ? ` ${className}` : ''}`}>{children}</div>
 }
 
 export function CardFooter({
@@ -81,9 +69,5 @@ export function CardFooter({
   children?: React.ReactNode
   className?: string
 }) {
-  return (
-    <div className={`ui-card-footer${className ? ` ${className}` : ""}`}>
-      {children}
-    </div>
-  )
+  return <div className={`ui-card-footer${className ? ` ${className}` : ''}`}>{children}</div>
 }
