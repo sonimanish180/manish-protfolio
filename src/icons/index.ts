@@ -35,4 +35,13 @@ export {
   Building2 as BuildingIcon,
   Star as StarIcon,
   TrendingUp as TrendingUpIcon,
-} from "lucide-react"
+
+  // Optimistic UI interactions
+  Bookmark as BookmarkIcon,
+  BookmarkCheck as BookmarkCheckIcon,
+  ThumbsUp as ThumbsUpIcon,
+  Sparkles as SparklesIcon,
+  Send as SendIcon,
+  AlertCircle as AlertCircleIcon,
+  RotateCcw as RetryIcon,
+} from 'lucide-react'

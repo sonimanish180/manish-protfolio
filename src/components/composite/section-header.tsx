@@ -1,42 +1,20 @@
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 interface SectionHeaderProps {
   title: string
   subtitle?: string
-  align?: "left" | "center"
+  align?: 'left' | 'center'
   className?: string
 }
 
-export function SectionHeader({
-  title,
-  subtitle,
-  align = "left",
-  className,
-}: SectionHeaderProps) {
+export function SectionHeader({ title, subtitle, align = 'left', className }: SectionHeaderProps) {
   return (
-    <div
-      className={cn(
-        "mb-12",
-        align === "center" && "text-center",
-        className
-      )}
-    >
-      <div className="flex items-center gap-3 mb-3">
-        {align === "left" && (
-          <div className="h-px w-8 bg-primary/60 shrink-0" />
-        )}
-        <span className="text-xs font-mono text-primary/80 uppercase tracking-[0.2em]">
-          {title}
-        </span>
-        {align === "center" && (
-          <div className="h-px flex-1 bg-border max-w-20 mx-auto" />
-        )}
+    <div className={cn('mb-14', align === 'center' && 'text-center', className)}>
+      <div className={cn('mb-3', align === 'center' && 'flex justify-center')}>
+        {/* Aurora — glass pill label */}
+        <span className="section-label">{title}</span>
       </div>
-      {subtitle && (
-        <p className="text-muted-foreground text-sm mt-1 max-w-2xl">
-          {subtitle}
-        </p>
-      )}
+      {subtitle && <p className="mt-3 max-w-2xl text-sm text-foreground/50">{subtitle}</p>}
     </div>
   )
 }

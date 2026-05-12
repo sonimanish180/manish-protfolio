@@ -1,0 +1,17 @@
+# Build output
+.next
+out
+dist
+
+# Dependencies
+node_modules
+
+# Auto-generated
+*.min.js
+*.min.css
+public/
+
+# Lock files (don't format these)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

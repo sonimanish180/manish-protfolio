@@ -3,10 +3,4 @@ export type NavItem = {
   href: string
 }
 
-export type SectionId =
-  | "hero"
-  | "about"
-  | "experience"
-  | "skills"
-  | "projects"
-  | "contact"
+export type SectionId = 'hero' | 'about' | 'experience' | 'skills' | 'projects' | 'contact'

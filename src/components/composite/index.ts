@@ -1,2 +1,2 @@
-export { SectionHeader } from "./section-header"
-export { AnimatedSection } from "./animated-section"
+export { SectionHeader } from './section-header'
+export { AnimatedSection } from './animated-section'
