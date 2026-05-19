@@ -45,6 +45,9 @@ import { ProjectsPGrid } from './_components/projects-pgrid'
 import { ProjectsList } from './_components/projects-list'
 import { ProjectsMasonry } from './_components/projects-masonry'
 
+/* ── Next.js Skill ─────────────────────────────────────────────────── */
+import { NextjsSkillSection } from './_components/nextjs-skill-section'
+
 /* ── Contact variants ──────────────────────────────────────────────── */
 import { ContactSection } from './_components/contact-section'
 import { ContactCentered } from './_components/contact-centered'
@@ -99,6 +102,9 @@ export default function HomePage() {
       {sectionVariants.projects === 'pgrid' && <ProjectsPGrid />}
       {sectionVariants.projects === 'list' && <ProjectsList />}
       {sectionVariants.projects === 'masonry' && <ProjectsMasonry />}
+
+      {/* ── Next.js Skill ────────────────────────────────────────────── */}
+      <NextjsSkillSection />
 
       {/* ── Contact ──────────────────────────────────────────────────── */}
       {sectionVariants.contact === 'luxury' && <ContactSection />}

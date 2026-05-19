@@ -44,4 +44,19 @@ export {
   Send as SendIcon,
   AlertCircle as AlertCircleIcon,
   RotateCcw as RetryIcon,
+
+  // Next.js Skill page
+  ArrowLeft as ArrowLeftIcon,
+  Package as PackageIcon,
+  Shield as ShieldIcon,
+  Palette as PaletteIcon,
+  GitBranch as GitBranchIcon,
+  Wrench as WrenchIcon,
+  RefreshCw as RefreshIcon,
+  FileCode as FileCodeIcon,
+  Bot as BotIcon,
+  CheckCircle2 as CheckCircleIcon,
+  Cpu as CpuIcon,
+  FlaskConical as FlaskIcon,
+  Globe2 as Globe2Icon,
 } from 'lucide-react'

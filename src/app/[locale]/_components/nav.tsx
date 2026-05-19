@@ -88,6 +88,19 @@ export function Nav() {
               <LayersIcon className="h-3.5 w-3.5" />
               Design
             </Link>
+            <Link
+              href="/nextjs-skill"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-sm transition-colors duration-200"
+              style={{ color: 'hsl(271,70%,68%)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'hsl(271,60%,82%)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'hsl(271,70%,68%)')}
+            >
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: 'hsl(271,70%,68%)', boxShadow: '0 0 6px hsl(271,70%,68%)' }}
+              />
+              Skill
+            </Link>
             <motion.button
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.96 }}
